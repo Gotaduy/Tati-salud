@@ -70,7 +70,7 @@
   .med-name { font-size: 14px; font-weight: 600; }
   .med-dose { font-size: 12px; color: var(--text2); margin-top: 2px; }
   .med-freq { font-size: 12px; color: var(--info-text); font-weight: 600; white-space: nowrap; }
-  .lab-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .lab-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 13px; gap: 10px; }
   .lab-row:last-child { border-bottom: none; }
   .lab-name { color: var(--text2); }
   .lab-val { font-weight: 600; }
@@ -89,12 +89,24 @@
   .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
   .charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1rem; margin-bottom: 1rem; }
   .note-box { font-size: 12px; color: var(--text3); font-style: italic; margin-top: 6px; }
+  .chart-label { font-size: 12px; color: var(--text2); margin-bottom: 6px; font-weight: 600; }
+  .chart-label span { font-weight: 400; color: var(--text3); }
+
+  .q-group-note { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+  .q-item { display: flex; gap: 10px; align-items: flex-start; padding: 0.65rem 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+  .q-item:last-child { border-bottom: none; }
+  .q-item input { margin-top: 4px; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+  .q-title { font-size: 14px; font-weight: 600; }
+  .q-ctx { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.5; }
+  .q-item.done .q-title { text-decoration: line-through; color: var(--text3); }
+  .q-item.done .q-ctx { opacity: 0.6; }
+  .date-input { font-size: 14px; padding: 6px 10px; border-radius: var(--radius); border: 1px solid var(--border2); background: var(--bg); color: var(--text); }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <div class="updated">Última actualización: 7 julio 2026</div>
+  <div class="updated">Última revisión: 15 sep 2026 (informe de hepatología del 23/09/2026)</div>
 
   <div class="header">
     <div class="avatar">TJ</div>
@@ -111,54 +123,60 @@
     <button onclick="showTab('medicacion',this)">Medicación</button>
     <button onclick="showTab('analitica',this)">Analíticas</button>
     <button onclick="showTab('nutricion',this)">Nutrición</button>
+    <button onclick="showTab('preguntas',this)">Preguntas</button>
     <button onclick="showTab('alertas',this)">Alertas &amp; contactos</button>
   </nav>
 
   <!-- RESUMEN -->
   <div id="tab-resumen" class="section active">
-    <div class="alert-box alert-warn">
-      <strong>⚠ Último ingreso 28 jun–7 jul 2026:</strong> Neutropenia febril sin foco (plaquetas 101, neutrófilos 360). Tratamiento con G-CSF + antibioterapia IV. Alta con función hepática estable y hemograma normalizado. Ciprofloxacino hasta 16/7, luego vuelve a Augmentine.
+    <div class="alert-box alert-ok">
+      <strong>&#8595; Buena evolución (sep 2026):</strong> GGT en su mínimo histórico (337 UI/L), bilirrubina normal (0,23), plaquetas y neutrófilos recuperados tras el ingreso de junio, sin fiebre ni colangitis desde dic 2025. Camina sin apoyo y la hepatomegalia ha bajado de 5 a 3 traveses desde mayo.
     </div>
+    <div class="alert-box alert-warn">
+      <strong>⚠ A seguir en la próxima revisión:</strong> alfafetoproteína 16,3 ng/mL (antes 9,0) — sin lesiones focales en la ecografía del 14/09; se repetirá el control. Hemoglobina 10,7 g/dL, en el límite bajo del rango.
+    </div>
+
     <div class="grid2">
-      <div class="metric"><div class="metric-label">Edad</div><div class="metric-value">13 m</div><div class="metric-sub">Alta 07/07/2026</div></div>
-      <div class="metric"><div class="metric-label">Plaquetas (ingreso)</div><div class="metric-value" style="color:var(--danger-text)">101</div><div class="metric-sub">↓↓ mínimo histórico · ref 186–422</div></div>
-      <div class="metric"><div class="metric-label">AST/ALT (ingreso)</div><div class="metric-value">186/165</div><div class="metric-sub">Estable vs mayo 2026</div></div>
-      <div class="metric"><div class="metric-label">BT (ingreso)</div><div class="metric-value" style="color:var(--ok-text)">0,33</div><div class="metric-sub">mg/dl · normal ✓</div></div>
+      <div class="metric"><div class="metric-label">Edad</div><div class="metric-value">15 m</div><div class="metric-sub">Visita 15/09/2026</div></div>
+      <div class="metric"><div class="metric-label">Peso</div><div class="metric-value">10,1 kg</div><div class="metric-sub">DE +0,4 OMS · talla 76 cm</div></div>
+      <div class="metric"><div class="metric-label">GGT</div><div class="metric-value">337</div><div class="metric-sub">↓ mín. histórico · ref &lt;38</div></div>
+      <div class="metric"><div class="metric-label">Plaquetas</div><div class="metric-value">178</div><div class="metric-sub">×10³/µL · ref 186–422</div></div>
     </div>
 
     <div class="card">
       <div class="card-title">Diagnóstico principal</div>
       <p style="font-size:14px;font-weight:600;margin-bottom:6px;">Atresia de vías biliares extrahepática — Kasai laparoscópico 21/08/2025</p>
-      <p style="font-size:13px;color:var(--text2);line-height:1.6;">Restablecimiento de flujo biliar mantenido. Evolución a hipertensión portal. Colangitis de repetición. Parámetros de síntesis conservados. Candidata a trasplante estudiada — <strong>sin contraindicación · no en lista de espera</strong>.</p>
+      <p style="font-size:13px;color:var(--text2);line-height:1.6;">Restablecimiento de flujo biliar mantenido. Evolución a hipertensión portal. Colangitis de repetición (último episodio dic 2025). Parámetros de síntesis conservados. Candidata a trasplante estudiada — <strong>sin contraindicación · no en lista de espera</strong>.</p>
     </div>
 
     <div class="card">
       <div class="card-title">Diagnósticos activos</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
         <span class="badge badge-danger">Hipertensión portal</span>
-        <span class="badge badge-warn">Neutropenia febril (último ingreso jul 2026)</span>
-        <span class="badge badge-warn">Colangitis de repetición</span>
-        <span class="badge badge-warn">Esplenomegalia</span>
-        <span class="badge badge-info">Quiste hepático 14×12×6 mm</span>
+        <span class="badge badge-warn">Colangitis de repetición (última dic 2025)</span>
+        <span class="badge badge-warn">Esplenomegalia 1,5 traveses · bazo 7,7 cm</span>
+        <span class="badge badge-warn">Hepatomegalia dura 3 traveses</span>
+        <span class="badge badge-info">Dilatación quística focal vía biliar 13×15×21 mm (estable)</span>
+        <span class="badge badge-warn">AFP levemente elevada (en control)</span>
         <span class="badge badge-neutral">Trombosis crónica subclavia dcha.</span>
-        <span class="badge badge-neutral">Antecedente sepsis Pseudomonas ×3</span>
+        <span class="badge badge-neutral">Antecedente sepsis Pseudomonas ×2</span>
         <span class="badge badge-ok">Desarrollo neuromotor normal</span>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title">Estado al alta 7 julio 2026</div>
-      <p style="font-size:13px;color:var(--text2);line-height:1.7;">Ingresó el 28/6 por fiebre 38°C y neutropenia (360 neutrófilos). Sin aumento de reactantes ni bilirrubina al ingreso. Función hepática similar a mayo (AST 186/ALT 165). Hemocultivo estéril. Se escaló antibioterapia a piperacilina-tazobactam + teicoplanina. Tras 24h sin fiebre y hemograma normalizado (plaquetas y neutrófilos en rango), <strong>alta el 7/7</strong>. Pendiente resultado Toxoplasma al alta. Ciprofloxacino hasta 16/7, luego retoma Augmentine.</p>
+      <div class="card-title">Estado en la última revisión — 15 sep 2026</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.7;">Ha estado bien, sin procesos febriles. Una semana previa con hiporexia sin otros síntomas. Deposiciones generalmente con color, a veces algo más claras. Sin coluria, ictericia, prurito, distensión abdominal ni sangrado digestivo. Deambula sin apoyo. Exploración: sin ascitis, hepatomegalia dura (3 traveses), esplenomegalia 1,5 traveses, leve circulación colateral. Ecografía 14/09: hepatomegalia de contorno lobulado con áreas pseudonodulares, sin lesiones focales, flujo portal 23 cm/s (mejorado), sin líquido libre — sin cambios significativos respecto a controles previos. Función de síntesis conservada (INR 0,9, albúmina 4,2).</p>
     </div>
 
     <div class="card">
       <div class="card-title">Próximos pasos</div>
-      <div class="row"><span>Hepatología</span><span class="badge badge-danger">Pendiente cita — tras alta 7/7/2026</span></div>
-      <div class="row"><span>Cambio antibiótico</span><span class="badge badge-warn">Ciprofloxacino hasta 16/7 → Augmentine desde 17/7</span></div>
-      <div class="row"><span>Toxoplasma PCR</span><span class="badge badge-warn">Resultado pendiente al alta</span></div>
-      <div class="row"><span>Ecografía abdominal</span><span class="badge badge-info">Pendiente de programar</span></div>
-      <div class="row"><span>Neurología</span><span class="badge badge-ok">Alta — no precisa seguimiento</span></div>
-      <div class="row"><span>Vacunas pendientes</span><span style="font-size:12px;color:var(--text2);">3ª VHB · DTPa · VPI · Hib · Neumococo · Triple vírica</span></div>
+      <div class="row"><span>Próxima revisión hepatología</span><span class="badge badge-danger">Fecha por confirmar</span></div>
+      <div class="row"><span>Espironolactona</span><span class="badge badge-warn">Suspender 2 semanas antes de la próxima consulta</span></div>
+      <div class="row"><span>Ecografía abdominal</span><span class="badge badge-info">Solicitada para el siguiente control</span></div>
+      <div class="row"><span>AFP</span><span class="badge badge-warn">Repetir en la próxima analítica</span></div>
+      <div class="row"><span>Vacunas pendientes</span><span style="font-size:12px;color:var(--text2);">Varicela (ya puede recibirla) · Gripe (recomendada)</span></div>
+      <div class="row"><span>Nutrición</span><span class="badge badge-info">Seguimiento activo</span></div>
       <div class="row"><span>Trasplante</span><span style="font-size:12px;color:var(--text2);">Sin contraindicación · no en lista de espera</span></div>
     </div>
   </div>
@@ -181,16 +199,18 @@
       <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">19 ago 2025</div><div class="tl-title">Ingreso H. La Paz — colestasis neonatal</div><div class="tl-desc">BT 8,1 · GOT 400 · GGT 599. Diagnóstico: atresia biliar extrahepática.</div></div></div>
       <div class="tl-item"><div class="tl-dot dot-sx"></div><div><div class="tl-date">21 ago 2025</div><div class="tl-title">Cirugía de Kasai laparoscópica</div><div class="tl-desc">2 meses 3 días de vida. Alta 1/9 con BT 3,5. Biopsia: Ishak 2 / Metavir F2.</div></div></div>
       <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">7–23 sep 2025</div><div class="tl-title">Ingreso — sospecha colangitis</div><div class="tl-desc">Deposiciones acólicas. Teicoplanina + Pip-Tazobactam. Trombosis pericatéter → inicio HIBOR.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">Oct 2025</div><div class="tl-title">Ingreso — bacteriemia Pseudomonas (1ª sepsis)</div><div class="tl-desc">Hemocultivo positivo P. aeruginosa. Ascitis → inicio espironolactona.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">Oct 2025</div><div class="tl-title">Ingreso — bacteriemia Pseudomonas (1ª sepsis)</div><div class="tl-desc">Hemocultivo positivo P. aeruginosa. Ascitis → inicio espironolactona. Nirsevimab 8/10.</div></div></div>
       <div class="tl-item"><div class="tl-dot dot-urg"></div><div><div class="tl-date">7 nov 2025</div><div class="tl-title">Urgencias — fiebre sin foco</div><div class="tl-desc">Fiebre 38°C 2h. Alta misma noche.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">8 nov–1 dic 2025</div><div class="tl-title">Ingreso UCIP — shock séptico Pseudomonas (2ª sepsis)</div><div class="tl-desc">Noradrenalina + vasopresina + actocortina. Meropenem 120mg/kg/día + teicoplanina + micafungina. Ecocardiograma sin endocarditis. EEG normal. Estudio trasplante realizado.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">8–21 dic 2025</div><div class="tl-title">Ingreso — colangitis (3er episodio)</div><div class="tl-desc">Sin aislamiento microbiológico. Tazocel. Quiste biliar 8mm en eco. Alta 21/12.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">8 nov–1 dic 2025</div><div class="tl-title">Ingreso UCIP — shock séptico Pseudomonas (2ª sepsis)</div><div class="tl-desc">Soporte inotrópico. Meropenem + teicoplanina + micafungina. Ecocardiograma sin endocarditis. EEG normal. Estudio de trasplante realizado.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">8–21 dic 2025</div><div class="tl-title">Ingreso — colangitis (último episodio)</div><div class="tl-desc">Sin aislamiento microbiológico. Tazocel. Alta 21/12.</div></div></div>
       <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">9 ene 2026</div><div class="tl-title">Consulta hepatología</div><div class="tl-desc">GGT 1901, BT 2,18. Cambio profilaxis a Ciprofloxacino desde 12/1.</div></div></div>
       <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">5 feb 2026</div><div class="tl-title">Eco Doppler</div><div class="tl-desc">2 quistes 8-9mm. Esplenomegalia 8,7cm. Circulación colateral. Pequeña ascitis. Trombosis subclavia crónica confirmada.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">12 mar 2026</div><div class="tl-title">Consulta hepatología</div><div class="tl-desc">GGT 1552 (pico). BT 0,91 normal. Peso 8,3kg/69cm. Cambio a Augmentine desde 6/4.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">16 abr 2026</div><div class="tl-title">Consulta + Eco Doppler</div><div class="tl-desc">GGT 902 ↓. BT 0,63. Quiste 14×12×6mm. Esplenomegalia 6cm. Sin ascitis. Retraso motor → derivación neurología.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">26 may 2026</div><div class="tl-title">Consulta hepatología + neurología</div><div class="tl-desc">GGT 414 ↓↓. BT 0,31 normal. Peso 8,9kg/72cm. Neurología: desarrollo normal, alta. Espironolactona 1×/día. Konakion cada 2 semanas. Hidropolivit suspendido.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">28 jun–7 jul 2026 ★</div><div class="tl-title">Ingreso — neutropenia febril sin foco (ÚLTIMO)</div><div class="tl-desc">Fiebre 38°C + neutropenia 360 + plaquetas 101. Sin colangitis ni bacteriemia. G-CSF + cefotaxima → escalado a pip-tazobactam + teicoplanina. Hemocultivo estéril. Adenovirus en curso (resto virus negativos). Alta 7/7 con hemograma normalizado y función hepática estable. Ciprofloxacino hasta 16/7 → Augmentine desde 17/7.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">12 mar 2026</div><div class="tl-title">Consulta hepatología</div><div class="tl-desc">GGT 1552 (pico). AST 456 / ALT 435. BT 0,91. Peso 8,3kg / 69cm. Cambio a Augmentine desde 6/4.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">16 abr 2026</div><div class="tl-title">Consulta + Eco Doppler</div><div class="tl-desc">GGT 902 ↓. BT 0,63. Quiste 14×12×6mm. Bazo 6cm. Sin ascitis. Retraso motor → derivación neurología.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">26 may 2026</div><div class="tl-title">Consulta hepatología + neurología</div><div class="tl-desc">GGT 414 ↓↓. BT 0,31. Peso 8,9kg / 72cm. Neurología: desarrollo normal, alta. Espironolactona 1×/día. Konakion cada 2 semanas. Hidropolivit suspendido.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">28 jun–7 jul 2026</div><div class="tl-title">Ingreso — neutropenia febril sin foco</div><div class="tl-desc">Fiebre 38°C, neutrófilos 0,41 y plaquetas 101 al ingreso. Sin cambios significativos en la función hepática. Microbiología negativa. Una semana de antibiótico IV (cefotaxima → pip-tazobactam + teicoplanina) y G-CSF (neupogen). Alta con hemograma normalizado. Ciprofloxacino hasta 16/7, luego Augmentine.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">28 jul 2026</div><div class="tl-title">Consulta hepatología (revisión post-ingreso)</div><div class="tl-desc">Peso 9,5kg / 74cm. Sin fiebre; neutrófilos y plaquetas normales (198). AST 233 · ALT 216 · GGT 392 · BT 0,40. AFP 9,0. Hepatomegalia 4 traveses, sin ascitis. Flujo portal 21 cm/s (mejorado), bazo 7,5 cm. Vit E alta, vit A baja (cociente A/RBP normal). Se solicita ecografía; puede recibir triple vírica y meningococo ACWY.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">14–15 sep 2026 ★</div><div class="tl-title">Eco abdominal + consulta hepatología — última revisión</div><div class="tl-desc">Peso 10,1kg / 76cm. Sin fiebre; una semana de hiporexia. AST 150 · ALT 200 · <strong>GGT 337 (mín. histórico)</strong> · BT 0,23. Plaquetas 178. AFP 16,3 (↑ desde 9,0; sin lesiones focales). Eco: dilatación quística focal 13×15×21mm sin cambios, porta 23 cm/s, bazo 7,7cm, sin líquido libre. Vit E alta → se baja Auxina E a 1 cápsula. Se programa suspender espironolactona 2 semanas antes de la próxima revisión. Triple vírica y ACWY ya administradas; puede recibir varicela; se recomienda gripe.</div></div></div>
     </div>
   </div>
 
@@ -198,74 +218,151 @@
   <div id="tab-medicacion" class="section">
     <div class="alert-box alert-danger"><strong>⚠ PROHIBIDO:</strong> Ibuprofeno · Paracetamol → usar siempre <strong>Metamizol (Metalgial gotas 500mg/ml — 4 gotas cada 8h)</strong>.</div>
     <div class="alert-box alert-danger"><strong>🚨 URGENCIA:</strong> Fiebre o sangrado digestivo → hospital más cercano + <strong>91 727 70 00</strong> (hepatólogo de guardia).</div>
+    <div class="alert-box alert-warn"><strong>Cambios recientes (15/09/2026):</strong> Auxina E baja a 1 cápsula/día · Espironolactona se suspende 2 semanas antes de la próxima consulta.</div>
 
     <div class="card">
-      <div class="card-title">Medicación al alta — 7/07/2026</div>
-      <div class="med-row"><div><div class="med-name">Ciprofloxacino 100mg/ml</div><div class="med-dose">0,9 ml · <strong>solo hasta el 16 de julio</strong></div></div><div class="med-freq">Cada 12h oral</div></div>
-      <div class="med-row"><div><div class="med-name">Augmentine (amox-clavulánico) 100mg/ml</div><div class="med-dose">1,4 ml · <strong>retomar desde el 17 de julio</strong> de forma continua</div></div><div class="med-freq">Cada 8h oral</div></div>
-      <div class="med-row"><div><div class="med-name">Konakion Ped 2mg (Vitamina K)</div><div class="med-dose">1 ampolla los lunes — cada 2 semanas</div></div><div class="med-freq">Cada 2 semanas</div></div>
-      <div class="med-row"><div><div class="med-name">Espironolactona 5mg/ml susp.</div><div class="med-dose">1,6 ml</div></div><div class="med-freq">Cada 24h oral</div></div>
-      <div class="med-row"><div><div class="med-name">Auxina E 50mg (Vitamina E)</div><div class="med-dose">2 cápsulas = 100mg</div></div><div class="med-freq">1×/día oral</div></div>
+      <div class="card-title">Medicación vigente — informe 15/09/2026</div>
+      <div class="med-row"><div><div class="med-name">Augmentine (amox-clavulánico) 100mg/ml</div><div class="med-dose">1,4 ml · profilaxis continua</div></div><div class="med-freq">Cada 8h oral</div></div>
+      <div class="med-row"><div><div class="med-name">Konakion Ped 2mg (Vitamina K)</div><div class="med-dose">1 ampolla los lunes</div></div><div class="med-freq">Cada 2 semanas</div></div>
+      <div class="med-row"><div><div class="med-name">Espironolactona 5mg/ml susp.</div><div class="med-dose">1,6 ml · <strong>suspender 2 semanas antes de la próxima consulta</strong></div></div><div class="med-freq">Cada 24h oral</div></div>
+      <div class="med-row"><div><div class="med-name">Auxina E 50mg (Vitamina E) <span class="badge badge-warn" style="font-size:10px;">dosis bajada</span></div><div class="med-dose"><strong>1 cápsula = 50 mg</strong> (antes 2 cápsulas) · vit E en sangre alta</div></div><div class="med-freq">1×/día oral</div></div>
       <div class="med-row"><div><div class="med-name">Vitamina D3 2000 UI/ml</div><div class="med-dose">1 ml = 2000 UI</div></div><div class="med-freq">1×/día oral</div></div>
       <div class="med-row"><div><div class="med-name">Omeprazol 2mg/ml susp.</div><div class="med-dose">4 ml</div></div><div class="med-freq">1×/día oral</div></div>
       <div class="med-row"><div><div class="med-name">Ácido ursodesoxicólico 25mg/ml</div><div class="med-dose">2 ml</div></div><div class="med-freq">Cada 12h oral</div></div>
-      <div class="med-row"><div><div class="med-name">Polaramine susp 2mg/5ml <span class="badge badge-neutral" style="font-size:10px;">si prurito</span></div><div class="med-dose">1 ml</div></div><div class="med-freq">Cada 8h oral</div></div>
-      <div class="med-row"><div><div class="med-name">Metamizol (Metalgial) 500mg/ml <span class="badge badge-neutral" style="font-size:10px;">si fiebre/dolor</span></div><div class="med-dose">4 gotas</div></div><div class="med-freq">Cada 8h oral</div></div>
-      <div class="med-row"><div><div class="med-name">Mycostatin (nistatina) <span class="badge badge-neutral" style="font-size:10px;">candidiasis oral</span></div><div class="med-dose">Aplicar en encías y mejillas tras cada toma</div></div><div class="med-freq">4×/día</div></div>
+      <div class="med-row"><div><div class="med-name">Polaramine susp 2mg/5ml <span class="badge badge-neutral" style="font-size:10px;">si prurito</span></div><div class="med-dose">1 ml · a demanda (pauta de hepatología)</div></div><div class="med-freq">Cada 8h oral</div></div>
+      <div class="med-row"><div><div class="med-name">Metamizol (Metalgial) 500mg/ml <span class="badge badge-neutral" style="font-size:10px;">si fiebre/dolor</span></div><div class="med-dose">4 gotas · a demanda (pauta de hepatología)</div></div><div class="med-freq">Cada 8h oral</div></div>
     </div>
 
     <div class="card">
-      <div class="card-title">Suspendida recientemente</div>
+      <div class="card-title">Finalizada / suspendida</div>
+      <div class="med-row"><div><div class="med-name strikethrough">Ciprofloxacino 100mg/ml 0,9ml c/12h</div><div class="med-dose">Pauta tras el ingreso de junio; terminó el 16/07/2026 y se retomó Augmentine.</div></div></div>
+      <div class="med-row"><div><div class="med-name strikethrough">Mycostatin (nistatina) — candidiasis oral</div><div class="med-dose">Tratamiento puntual; no figura en los informes de julio ni septiembre.</div></div></div>
       <div class="med-row"><div><div class="med-name strikethrough">Hidropolivit / Protovit</div><div class="med-dose">Suspendido mayo 2026.</div></div></div>
-      <div class="med-row"><div><div class="med-name strikethrough">Hibor (bemiparina)</div><div class="med-dose">Suspendido diciembre 2025. Reiniciado brevemente en ingreso jun 2026 y suspendido de nuevo al 2º día.</div></div></div>
+      <div class="med-row"><div><div class="med-name strikethrough">Hibor (bemiparina)</div><div class="med-dose">Suspendido dic 2025. Reiniciado brevemente en el ingreso de jun 2026 y retirado al 2º día.</div></div></div>
     </div>
   </div>
 
   <!-- ANALÍTICAS -->
   <div id="tab-analitica" class="section">
     <div class="tab-btns">
-      <button class="active" id="btn-jul" onclick="showAn('jul')">28 jun 2026 ★</button>
+      <button class="active" id="btn-sep" onclick="showAn('sep')">15 sep 2026 ★</button>
+      <button id="btn-jul" onclick="showAn('jul')">28 jul 2026</button>
+      <button id="btn-jun" onclick="showAn('jun')">28 jun 2026</button>
       <button id="btn-may" onclick="showAn('may')">26 may 2026</button>
       <button id="btn-abr" onclick="showAn('abr')">16 abr 2026</button>
       <button id="btn-mar" onclick="showAn('mar')">12 mar 2026</button>
     </div>
 
+    <!-- SEPTIEMBRE 2026 -->
+    <div id="an-sep">
+      <div class="card">
+        <div class="card-title">Función hepática — 15 septiembre 2026</div>
+        <div class="lab-row"><span class="lab-name">AST (GOT)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">150 UI/L</div><div class="lab-ref">Ref &lt;95 ↑ · bajó desde 233 (jul)</div></div></div>
+        <div class="lab-row"><span class="lab-name">ALT (GPT)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">200 UI/L</div><div class="lab-ref">Ref &lt;35 ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">GGT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">337 UI/L</div><div class="lab-ref">Ref &lt;38 ↑ · mínimo histórico (392 en jul)</div></div></div>
+        <div class="lab-row"><span class="lab-name">Fosfatasa alcalina</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">729 UI/L</div><div class="lab-ref">Ref 142–337 ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Bilirrubina total</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,23 mg/dl</div><div class="lab-ref">Ref 0,30–1,20 · ligeramente por debajo, sin relevancia clínica habitual</div></div></div>
+        <div class="lab-row"><span class="lab-name">Ácidos biliares totales</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">34,50 µmol/L</div><div class="lab-ref">Ref &lt;10 ↑ · el informe indica descenso progresivo; el laboratorio advierte que esta prueba no es fiable con ursodesoxicólico</div></div></div>
+        <div class="lab-row"><span class="lab-name">LDH</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">339 UI/L ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Colinesterasa</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">8463 UI/L ✓</div><div class="lab-ref">Ref 7000–19000</div></div></div>
+        <div class="lab-row"><span class="lab-name">AFP (alfafetoproteína)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">16,3 ng/mL</div><div class="lab-ref">Ref &lt;8 ↑ · antes 9,0 · sin lesiones focales en eco · se repite en próxima revisión</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Síntesis hepática y proteínas — 15 septiembre 2026</div>
+        <div class="lab-row"><span class="lab-name">INR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,9 ✓</div><div class="lab-ref">Actividad protrombina 115% · TTPA 24,2 s</div></div></div>
+        <div class="lab-row"><span class="lab-name">Fibrinógeno</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">345 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Albúmina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">4,2 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Proteínas totales</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">6,1 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Prealbúmina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10,9 mg/dL</div><div class="lab-ref">Ref 10–40 · en el límite bajo</div></div></div>
+        <div class="lab-row"><span class="lab-name">Proteína transportadora de retinol (RBP)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">1,6 mg/dL</div><div class="lab-ref">Ref 3,0–6,0 ↓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Vitaminas — 15 septiembre 2026</div>
+        <div class="lab-row"><span class="lab-name">Vitamina D</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">43 ng/mL ✓</div><div class="lab-ref">Suficiencia 30–100</div></div></div>
+        <div class="lab-row"><span class="lab-name">Vitamina E</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">16,25 µg/mL</div><div class="lab-ref">Ref 6,30–14,20 ↑ → se baja Auxina E a 1 cápsula · cociente E/col 7,9 ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Vitamina A</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">0,22 µg/mL</div><div class="lab-ref">Ref 0,30–0,50 ↓ · cociente A/RBP 1,0 ✓ (normal)</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Hemograma — 15 septiembre 2026</div>
+        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">178 ×10³/µL</div><div class="lab-ref">Ref 186–422 · ligeramente bajas (198 en jul)</div></div></div>
+        <div class="lab-row"><span class="lab-name">Leucocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">6,70 ×10³/µL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Neutrófilos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">2,18 ×10³/µL (32,6%) ✓</div><div class="lab-ref">Ref 1,30–5,90</div></div></div>
+        <div class="lab-row"><span class="lab-name">Linfocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">3,66 ×10³/µL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10,7 g/dL</div><div class="lab-ref">Ref 10,1–14,9 · en el límite bajo (11,3 en jul)</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hematocrito / VCM</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">33,5% / 79,8 fL ✓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Otras determinaciones — 15 septiembre 2026</div>
+        <div class="lab-row"><span class="lab-name">Glucosa</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">109 mg/dL</div><div class="lab-ref">Ref 60–100 · leve ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Creatinina</span><div style="text-align:right"><div class="lab-val">0,15 mg/dL</div><div class="lab-ref">Ref 0,20–0,40 · ligeramente baja</div></div></div>
+        <div class="lab-row"><span class="lab-name">Colesterol total / HDL / LDL</span><div style="text-align:right"><div class="lab-val">205 / 83 / 98 mg/dL</div><div class="lab-ref">Total ref &lt;200 · leve ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Triglicéridos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">120 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Calcio total (ajustado) / Fosfato</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">9,9 (9,7) / 4,8 mg/dL ✓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ecografía abdominal — 14 septiembre 2026</div>
+        <div class="row"><span>Hígado</span><span style="text-align:right;max-width:65%">Hepatomegalia de contorno lobulado, ecogenicidad heterogénea, áreas pseudonodulares, hiperecogenicidad periportal. <strong>Sin lesiones focales.</strong></span></div>
+        <div class="row"><span>Vía biliar</span><span style="text-align:right;max-width:65%">Dilatación quística focal 13×15×21 mm — sin cambios</span></div>
+        <div class="row"><span>Vena porta</span><span style="text-align:right;max-width:65%">5 mm · 23 cm/s (flujo hepatópeto, mejorado)</span></div>
+        <div class="row"><span>Arteria hepática</span><span style="text-align:right;max-width:65%">4 mm · 68 cm/s · IR 0,84 — hipertrófica e hiperdinámica</span></div>
+        <div class="row"><span>Venas suprahepáticas / cava</span><span style="text-align:right;max-width:65%">Comprimidas pero permeables / cava permeable</span></div>
+        <div class="row"><span>Bazo</span><span style="text-align:right;max-width:65%">7,7 cm, homogéneo — en el límite alto, globuloso</span></div>
+        <div class="row"><span>Otros</span><span style="text-align:right;max-width:65%">Adenopatía en hilio hepático 5,5 mm · riñones normales · sin líquido libre</span></div>
+        <p class="note-box">Conclusión del informe: sin cambios significativos; datos de hepatopatía.</p>
+      </div>
+    </div>
+
     <!-- JULIO 2026 -->
-    <div id="an-jul">
+    <div id="an-jul" style="display:none">
       <div class="card">
-        <div class="card-title">Función hepática — 28 junio 2026 (ingreso)</div>
-        <div class="lab-row"><span class="lab-name">AST (GOT)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">186 UI/L</div><div class="lab-ref">Ref &lt;95 ↑ · estable vs mayo</div></div></div>
-        <div class="lab-row"><span class="lab-name">ALT (GPT)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">165 UI/L</div><div class="lab-ref">Ref &lt;35 ↑ · estable vs mayo</div></div></div>
-        <div class="lab-row"><span class="lab-name">Bilirrubina total</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,33 mg/dl</div><div class="lab-ref">✓ normal</div></div></div>
-        <div class="lab-row"><span class="lab-name">Bilirrubina directa</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,13 mg/dl</div><div class="lab-ref">Ref &lt;0,30 ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">INR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">1,0</div><div class="lab-ref">✓ síntesis conservada</div></div></div>
-        <div class="lab-row"><span class="lab-name">PCR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">&lt;3,0 mg/L</div><div class="lab-ref">Ref &lt;5,0 ✓ sin inflamación</div></div></div>
-        <div class="lab-row"><span class="lab-name">Procalcitonina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,10 ng/mL</div><div class="lab-ref">Ref &lt;0,50 ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Glucosa</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">100 mg/dL</div><div class="lab-ref">Ref 60–100 ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Sodio / Potasio</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">137 / 4,3 mmol/L</div><div class="lab-ref">✓ electrolitos normales</div></div></div>
+        <div class="card-title">Función hepática — 28 julio 2026</div>
+        <div class="lab-row"><span class="lab-name">AST</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">233 UI/L ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">216 UI/L ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">GGT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">392 UI/L ↑</div><div class="lab-ref">Disminuyendo progresivamente</div></div></div>
+        <div class="lab-row"><span class="lab-name">Fosfatasa alcalina</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">763 UI/L ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Bilirrubina total</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,40 mg/dl ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">INR / Fibrinógeno</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,9 / 417 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Albúmina / Prealbúmina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">4,3 g/dL / 11,3 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">AFP</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">9,0 ng/mL</div><div class="lab-ref">Ref &lt;8 · mínimo del año</div></div></div>
+        <div class="lab-row"><span class="lab-name">VSG</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">24 mm/h</div><div class="lab-ref">Ref &lt;20 · leve ↑</div></div></div>
       </div>
       <div class="card">
-        <div class="card-title">Hemograma — 28 junio 2026 (ingreso) ⚠ valores críticos</div>
-        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">101 ×10³/µL</div><div class="lab-ref">Ref 186–422 ↓↓ mínimo histórico</div></div></div>
-        <div class="lab-row"><span class="lab-name">Neutrófilos totales</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">0,41 ×10³/µL (19%)</div><div class="lab-ref">Ref 1,30–5,90 ↓↓ neutropenia grave</div></div></div>
-        <div class="lab-row"><span class="lab-name">Leucocitos totales</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">2,17 ×10³/µL</div><div class="lab-ref">Ref 4,90–9,70 ↓↓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Linfocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">1,11 ×10³/µL (51%)</div><div class="lab-ref">Ref 1,90–4,12 ↓ leve</div></div></div>
-        <div class="lab-row"><span class="lab-name">Monocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">0,65 ×10³/µL (30%)</div><div class="lab-ref">Ref 0,35–1,17 ✓ pero % elevado</div></div></div>
-        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">11,5 g/dL</div><div class="lab-ref">Ref 10,1–14,9 ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Hematocrito</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">36,4%</div><div class="lab-ref">Ref 30,2–43,8 ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">VCM</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">90,8 fL</div><div class="lab-ref">Ref 67,9–90,5 ✓ (límite superior)</div></div></div>
+        <div class="card-title">Vitaminas — 28 julio 2026</div>
+        <div class="lab-row"><span class="lab-name">Vitamina D</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">51 ng/mL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Vitamina E</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">17,66 µg/mL ↑</div><div class="lab-ref">Ref 6,30–14,20 · cociente E/col 8,1 ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Vitamina A</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">0,23 µg/mL ↓</div><div class="lab-ref">Ref 0,30–0,50 · cociente A/RBP 1,0 ✓</div></div></div>
       </div>
       <div class="card">
-        <div class="card-title">Microbiología — ingreso jun 2026</div>
-        <div class="lab-row"><span class="lab-name">Hemocultivo 28/6</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Estéril ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Frotis rectal</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Negativo ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">VRS / Influenza / SARS-CoV2</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Negativos ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Parvovirus B19 (carga viral)</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Indetectable ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">CMV (carga viral)</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Indetectable ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Epstein-Barr (carga viral)</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Indetectable ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Adenovirus (carga viral)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">En curso al alta</div><div class="lab-ref">Pendiente resultado</div></div></div>
-        <div class="lab-row"><span class="lab-name">Toxoplasma (PCR)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">Pendiente al alta</div></div></div>
-        <div class="lab-row"><span class="lab-name">Herpes 1 y 2 / Varicela</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Negativos ✓</div></div></div>
+        <div class="card-title">Hemograma — 28 julio 2026</div>
+        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">198 ×10³/µL ✓</div><div class="lab-ref">Recuperadas tras el ingreso (101 el 28/06)</div></div></div>
+        <div class="lab-row"><span class="lab-name">Leucocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">8,51 ×10³/µL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Neutrófilos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">1,68 ×10³/µL (19,7%) ✓</div><div class="lab-ref">Normales, mantenidos tras la neutropenia de junio</div></div></div>
+        <div class="lab-row"><span class="lab-name">Linfocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">5,05 ×10³/µL</div><div class="lab-ref">Ref 1,90–4,12 · leve ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">11,3 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hematocrito / VCM</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">33,1% / 84,0 fL ✓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Otras — 28 julio 2026</div>
+        <div class="lab-row"><span class="lab-name">Glucosa / Creatinina / Urato</span><div style="text-align:right"><div class="lab-val">98 / 0,17 / 2,7</div><div class="lab-ref">Creatinina ref 0,20–0,40 · ligeramente baja</div></div></div>
+        <div class="lab-row"><span class="lab-name">Colesterol total / HDL / LDL</span><div style="text-align:right"><div class="lab-val">218 / 107 / 93 mg/dL</div><div class="lab-ref">Total ref &lt;200 · leve ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Triglicéridos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">94 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Calcio total (ajustado) / Fosfato</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10,5 (10,3) / 5,5 mg/dL ✓</div></div></div>
+      </div>
+    </div>
+
+    <!-- JUNIO 2026 -->
+    <div id="an-jun" style="display:none">
+      <div class="card">
+        <div class="card-title">Ingreso 28 junio 2026 — neutropenia febril</div>
+        <div class="lab-row"><span class="lab-name">AST / ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">186 / 165 UI/L ↑</div><div class="lab-ref">Estables vs mayo</div></div></div>
+        <div class="lab-row"><span class="lab-name">Bilirrubina total / directa</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,33 / 0,13 mg/dl ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">INR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">1,0 ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">PCR / Procalcitonina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">&lt;3,0 mg/L / 0,10 ng/mL ✓</div><div class="lab-ref">Sin signos de infección bacteriana</div></div></div>
+        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">101 ×10³/µL ↓↓</div><div class="lab-ref">Ref 186–422 · mínimo histórico, recuperadas antes del alta</div></div></div>
+        <div class="lab-row"><span class="lab-name">Neutrófilos</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">0,41 ×10³/µL (19%) ↓↓</div><div class="lab-ref">Ref 1,30–5,90 · neutropenia</div></div></div>
+        <div class="lab-row"><span class="lab-name">Leucocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">2,17 ×10³/µL ↓↓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">11,5 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Microbiología</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">Negativa ✓</div><div class="lab-ref">Hemocultivo estéril · frotis rectal, virus respiratorios, CMV, EBV, parvovirus, herpes y varicela negativos/indetectables · el informe de sep recoge "microbiología negativa"</div></div></div>
       </div>
     </div>
 
@@ -273,59 +370,37 @@
     <div id="an-may" style="display:none">
       <div class="card">
         <div class="card-title">Función hepática — 26 mayo 2026</div>
-        <div class="lab-row"><span class="lab-name">AST</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">186 UI/L</div><div class="lab-ref">↑ · bajando desde pico de mar</div></div></div>
-        <div class="lab-row"><span class="lab-name">ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">162 UI/L</div><div class="lab-ref">↑ · bajando</div></div></div>
-        <div class="lab-row"><span class="lab-name">GGT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">414 UI/L</div><div class="lab-ref">↑ · descenso notable desde 1552</div></div></div>
+        <div class="lab-row"><span class="lab-name">AST / ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">186 / 162 UI/L ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">GGT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">414 UI/L ↑</div></div></div>
         <div class="lab-row"><span class="lab-name">Bilirrubina total</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,31 mg/dl ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Albúmina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">4,2 g/dL ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">INR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,9 ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">AFP</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">24,1 ng/mL ↑</div><div class="lab-ref">En seguimiento</div></div></div>
-        <div class="lab-row"><span class="lab-name">Vitamina D</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">59 ng/mL ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Vitamina E / ratio</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">13,80 µg/mL · ratio 7,0 ✓</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Hemograma — 26 mayo 2026</div>
-        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">155 ×10³/µL</div><div class="lab-ref">↓ hiperesplenismo leve</div></div></div>
-        <div class="lab-row"><span class="lab-name">Leucocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">8,41 ×10³/µL ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">13,0 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Albúmina / INR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">4,2 g/dL / 0,9 ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">AFP</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">24,1 ng/mL ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Vit D / Vit E (ratio) / Vit A</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">59 / 13,80 (7,0) / 0,29 ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Plaquetas / Leucocitos / Hb</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">155 / 8,41 / 13,0</div><div class="lab-ref">Plaquetas ↓ leve</div></div></div>
       </div>
     </div>
 
     <!-- ABRIL 2026 -->
     <div id="an-abr" style="display:none">
       <div class="card">
-        <div class="card-title">Función hepática — 16 abril 2026</div>
-        <div class="lab-row"><span class="lab-name">AST</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">173 UI/L ↑</div></div></div>
-        <div class="lab-row"><span class="lab-name">ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">201 UI/L ↑</div></div></div>
+        <div class="card-title">Analítica — 16 abril 2026</div>
+        <div class="lab-row"><span class="lab-name">AST / ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">173 / 201 UI/L ↑</div></div></div>
         <div class="lab-row"><span class="lab-name">GGT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">902 UI/L ↑</div></div></div>
         <div class="lab-row"><span class="lab-name">Bilirrubina total</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,63 mg/dl ✓</div></div></div>
         <div class="lab-row"><span class="lab-name">AFP</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">32,6 ng/mL ↑ (pico)</div></div></div>
-        <div class="lab-row"><span class="lab-name">Vitamina E / ratio</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">23,27 µg/mL · ratio 10,0</div><div class="lab-ref">Levemente alto → dosis bajada</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Hemograma — 16 abril 2026</div>
-        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">182 ×10³/µL ↓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Leucocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">7,68 ×10³/µL ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">12,5 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Plaquetas / Leucocitos / Hb</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">182 / 7,68 / 12,5</div></div></div>
       </div>
     </div>
 
     <!-- MARZO 2026 -->
     <div id="an-mar" style="display:none">
       <div class="card">
-        <div class="card-title">Función hepática — 12 marzo 2026</div>
-        <div class="lab-row"><span class="lab-name">AST</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">456 UI/L ↑↑ (pico)</div></div></div>
-        <div class="lab-row"><span class="lab-name">ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">435 UI/L ↑↑ (pico)</div></div></div>
+        <div class="card-title">Analítica — 12 marzo 2026</div>
+        <div class="lab-row"><span class="lab-name">AST / ALT</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">456 / 435 UI/L ↑↑ (pico)</div></div></div>
         <div class="lab-row"><span class="lab-name">GGT</span><div style="text-align:right"><div class="lab-val" style="color:var(--danger-text)">1552 UI/L ↑↑↑ (pico)</div></div></div>
         <div class="lab-row"><span class="lab-name">Bilirrubina total</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,91 mg/dl ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">INR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,9 ✓</div></div></div>
         <div class="lab-row"><span class="lab-name">AFP</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">24,7 ng/mL ↑</div></div></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Hemograma — 12 marzo 2026</div>
-        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">209 ×10³/µL ↓ leve</div></div></div>
-        <div class="lab-row"><span class="lab-name">Leucocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10,56 ×10³/µL ✓</div></div></div>
-        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">13,3 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Plaquetas / Leucocitos / Hb</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">209 / 10,56 / 13,3</div></div></div>
       </div>
     </div>
 
@@ -335,24 +410,32 @@
       <div style="position:relative;width:100%;height:200px;"><canvas id="ggtChart"></canvas></div>
     </div>
     <div class="card">
+      <div class="card-title">Evolución transaminasas (UI/L)</div>
+      <div style="position:relative;width:100%;height:200px;"><canvas id="transChart"></canvas></div>
+    </div>
+    <div class="card">
       <div class="card-title">Evolución bilirrubina total (mg/dl)</div>
       <div style="position:relative;width:100%;height:180px;"><canvas id="btChart"></canvas></div>
     </div>
     <div class="card">
+      <div class="card-title">Evolución alfafetoproteína — AFP (ng/mL) · ref &lt;8</div>
+      <div style="position:relative;width:100%;height:180px;"><canvas id="afpChart"></canvas></div>
+    </div>
+    <div class="card">
       <div class="card-title">Evolución hemograma</div>
-      <p class="note-box" style="margin-bottom:12px;">⚠ Las plaquetas bajaron a 101 en el ingreso de junio 2026 — mínimo histórico. Se normalizaron con tratamiento antes del alta.</p>
+      <p class="note-box" style="margin-bottom:12px;">El punto rojo de junio 2026 corresponde al ingreso por neutropenia febril; plaquetas y neutrófilos se normalizaron y se mantienen en rango desde julio.</p>
       <div class="charts-grid">
         <div>
-          <p style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Plaquetas (×10³/µL) <span style="font-weight:400;color:var(--text3)">· ref ~200+</span></p>
+          <p class="chart-label">Plaquetas (×10³/µL) <span>· ref 186–422</span></p>
           <div style="position:relative;width:100%;height:160px;"><canvas id="platChart"></canvas></div>
         </div>
         <div>
-          <p style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Leucocitos (×10³/µL) <span style="font-weight:400;color:var(--text3)">· ref 4,9–9,7</span></p>
+          <p class="chart-label">Leucocitos (×10³/µL) <span>· ref 4,9–9,7</span></p>
           <div style="position:relative;width:100%;height:160px;"><canvas id="leucChart"></canvas></div>
         </div>
       </div>
       <div style="margin-top:1rem;">
-        <p style="font-size:12px;color:var(--text2);margin-bottom:6px;font-weight:600;">Hemoglobina (g/dL) <span style="font-weight:400;color:var(--text3)">· ref 10,1–14,9</span></p>
+        <p class="chart-label">Hemoglobina (g/dL) <span>· ref 10,1–14,9 (rango del laboratorio en jun–sep 2026)</span></p>
         <div style="position:relative;width:100%;height:160px;"><canvas id="hbChart"></canvas></div>
       </div>
     </div>
@@ -363,7 +446,7 @@
     <div class="card">
       <div class="card-title">Evolución peso y talla</div>
       <div style="display:grid;grid-template-columns:auto 1fr 1fr 1fr;gap:6px;font-size:12px;color:var(--text2);padding-bottom:6px;border-bottom:1px solid var(--border);font-weight:600;">
-        <div>Fecha</div><div style="text-align:center">Peso</div><div style="text-align:center">Talla</div><div style="text-align:right">DE OMS</div>
+        <div>Fecha</div><div style="text-align:center">Peso</div><div style="text-align:center">Talla</div><div style="text-align:right">DE OMS (peso)</div>
       </div>
       <div class="row"><span style="font-size:12px">Sep 25 (3m)</span><span style="font-size:12px">4,71 kg</span><span style="font-size:12px">59,4 cm</span><span style="font-size:12px;color:var(--text2)">-1,87</span></div>
       <div class="row"><span style="font-size:12px">Oct 25 (4m)</span><span style="font-size:12px">5,24 kg</span><span style="font-size:12px">60,4 cm</span><span style="font-size:12px;color:var(--text2)">-1,72</span></div>
@@ -371,15 +454,15 @@
       <div class="row"><span style="font-size:12px">Ene 26 (7m)</span><span style="font-size:12px">7,12 kg</span><span style="font-size:12px">64,8 cm</span><span style="font-size:12px;color:var(--text2)">-0,71</span></div>
       <div class="row"><span style="font-size:12px">Mar 26 (9m)</span><span style="font-size:12px">8,30 kg</span><span style="font-size:12px">69 cm</span><span style="font-size:12px;color:var(--text2)">+0,1</span></div>
       <div class="row"><span style="font-size:12px">Abr 26 (10m)</span><span style="font-size:12px">8,40 kg</span><span style="font-size:12px">69,5 cm</span><span style="font-size:12px;color:var(--text2)">-0,1</span></div>
-      <div class="row"><span style="font-size:12px;font-weight:600">May 26 (11m) ★</span><span style="font-size:12px;font-weight:600">8,90 kg</span><span style="font-size:12px;font-weight:600">72 cm</span><span style="font-size:12px;color:var(--ok-text);font-weight:600">+0,2 ↑</span></div>
+      <div class="row"><span style="font-size:12px">May 26 (11m)</span><span style="font-size:12px">8,90 kg</span><span style="font-size:12px">72 cm</span><span style="font-size:12px;color:var(--text2)">+0,2</span></div>
+      <div class="row"><span style="font-size:12px">Jul 26 (13m)</span><span style="font-size:12px">9,50 kg</span><span style="font-size:12px">74 cm</span><span style="font-size:12px;color:var(--text2)">+0,3</span></div>
+      <div class="row"><span style="font-size:12px;font-weight:600">Sep 26 (15m) ★</span><span style="font-size:12px;font-weight:600">10,10 kg</span><span style="font-size:12px;font-weight:600">76 cm</span><span style="font-size:12px;color:var(--ok-text);font-weight:600">+0,4 ↑</span></div>
     </div>
     <div class="card">
-      <div class="card-title">Pauta alimentaria (mayo 2026)</div>
+      <div class="card-title">Estado nutricional — sep 2026</div>
       <p style="font-size:13px;color:var(--text2);line-height:1.8;">
-        <strong>Leche:</strong> Infatrini Peptisorb — 5 tomas 120–160 ml/día<br>
-        <strong>Sólidos:</strong> Puré con pescado, huevo, carne, frutos secos + fruta<br>
-        <strong>Sin sonda nasogástrica</strong> — todo por boca<br>
-        <strong>Pendiente:</strong> revisión Nutrición
+        Mejoría nutricional mantenida desde el último episodio de colangitis. <strong>Sin sonda nasogástrica.</strong> Curva ponderoestatural ascendente. IMC 17,49 (+1,0 DE OMS). Talla -0,6 DE OMS. Superficie corporal 0,46 m². Seguimiento activo en Nutrición.<br>
+        <strong>Última pauta alimentaria documentada (mayo 2026):</strong> Infatrini Peptisorb 5 tomas de 120–160 ml/día + purés variados (pescado, huevo, carne, frutos secos) y fruta. <em>Pendiente de actualizar con la pauta vigente de Nutrición.</em>
       </p>
     </div>
     <div class="card">
@@ -388,16 +471,63 @@
     </div>
   </div>
 
+  <!-- PREGUNTAS -->
+  <div id="tab-preguntas" class="section">
+    <div class="alert-box alert-info">Lista para llevar a la próxima consulta de hepatología. Marca las que ya se hayan aclarado (se guarda en este dispositivo). Los datos entre paréntesis son los de los informes de 2026.</div>
+
+    <div class="card">
+      <div class="card-title">Próxima consulta de hepatología</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
+        <input type="date" id="nextVisit" class="date-input">
+        <span id="spiroMsg" style="font-size:13px;color:var(--text2);">Introduce la fecha de la cita para calcular cuándo suspender la espironolactona (2 semanas antes).</span>
+      </div>
+      <p class="note-box">La fecha se guarda solo en este dispositivo. El informe del 15/09 no indica fecha de cita.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">1 · Resultados que conviene aclarar</div>
+      <label class="q-item"><input type="checkbox" data-q="q1"><div><div class="q-title">Hemoglobina y tamaño de los glóbulos rojos: ¿hace falta estudiar el hierro (ferritina, hierro, saturación de transferrina)?</div><div class="q-ctx">Hemoglobina 13,3 (mar) → 10,7 (sep). VCM 90,8 (jun) → 79,8 (sep). Glóbulos microcíticos 0,7% → 5,6%.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q2"><div><div class="q-title">Alfafetoproteína 16,3 (antes 9,0): ¿cuándo se repite y con qué prueba de imagen?</div><div class="q-ctx">Sin lesiones focales en la ecografía del 14/09. Pico de 32,6 en abril.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q3"><div><div class="q-title">Vitamina A baja con cociente A/RBP normal: ¿hay que suplementarla?</div><div class="q-ctx">Vitamina A 0,22 (ref 0,30–0,50), cociente A/RBP 1,0. Hidropolivit se suspendió en mayo.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q4"><div><div class="q-title">Vitamina E alta: ¿cuándo se repite tras bajar Auxina E a 1 cápsula?</div><div class="q-ctx">Vitamina E 16,25 (ref 6,30–14,20); el cociente con el colesterol es normal (7,9).</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q5"><div><div class="q-title">Ácidos biliares 34,5: ¿cómo se interpretan si el laboratorio avisa de que no son fiables con ursodesoxicólico?</div><div class="q-ctx">El informe dice que disminuyen progresivamente.</div></div></label>
+    </div>
+
+    <div class="card">
+      <div class="card-title">2 · Hipertensión portal y evolución del hígado</div>
+      <label class="q-item"><input type="checkbox" data-q="q6"><div><div class="q-title">Ecografía: ¿los hallazgos de contorno lobulado y áreas pseudonodulares son nuevos? ¿Indican fibrosis avanzada o cirrosis?</div><div class="q-ctx">Eco 14/09: contorno lobulado, áreas pseudonodulares, arteria hepática hiperdinámica (IR 0,84), bazo globuloso en el límite alto (7,7 cm). El informe concluye "sin cambios significativos".</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q7"><div><div class="q-title">¿Está indicado un cribado de varices esofágicas (endoscopia) o se vigila con plaquetas y tamaño del bazo? ¿Con qué criterios?</div><div class="q-ctx">Nunca ha sangrado. Circulación colateral leve. Plaquetas 178.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q8"><div><div class="q-title">¿Se puede medir la rigidez del hígado (elastografía) para seguir la fibrosis? ¿Se repetirá alguna biopsia?</div><div class="q-ctx">Biopsia del Kasai (ago 2025): Ishak 2 / Metavir F2 como mínimo, en una muestra escasa.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q9"><div><div class="q-title">Plaquetas y bazo: ¿a partir de qué cifra o tamaño les preocuparía?</div><div class="q-ctx">Plaquetas 209 → 182 → 155 → 101 (ingreso) → 198 → 178. Bazo 7,5 → 7,7 cm.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q10"><div><div class="q-title">Al retirar la espironolactona: ¿qué signos vigilar (hinchazón abdominal, aumento brusco de peso)? ¿Cuándo se vuelve a empezar?</div><div class="q-ctx">Lleva 1,6 ml cada 24 h. Sin ascitis en las ecografías de julio y septiembre.</div></div></label>
+    </div>
+
+    <div class="card">
+      <div class="card-title">3 · Trasplante</div>
+      <label class="q-item"><input type="checkbox" data-q="q11"><div><div class="q-title">¿Qué criterios concretos usa el equipo para plantear la inclusión en lista? ¿Qué parámetros miran en cada revisión?</div><div class="q-ctx">Hoy: estudio realizado, sin contraindicación, no incluida en lista.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q12"><div><div class="q-title">Si llegara el momento: ¿cómo sería el proceso (donante fallecido o vivo) y qué conviene adelantar?</div><div class="q-ctx">Sirve para ir preparándose con calma, no indica que haga falta ahora.</div></div></label>
+    </div>
+
+    <div class="card">
+      <div class="card-title">4 · Día a día</div>
+      <label class="q-item"><input type="checkbox" data-q="q13"><div><div class="q-title">Deposiciones "algo más claras en ocasiones": ¿qué color o duración debe hacernos acudir? ¿Conviene guardar fotos?</div><div class="q-ctx">Informes de jul y sep: color presente, a veces más claras.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q14"><div><div class="q-title">Augmentine continuo: ¿hasta cuándo? ¿Qué hacer si vuelve el muguet?</div><div class="q-ctx">Profilaxis desde el 6/4/2026. Hubo muguet tratado con Mycostatin.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q15"><div><div class="q-title">Ante fiebre: ¿protocolo exacto? ¿Siempre a urgencias de La Paz?</div><div class="q-ctx">Antecedentes: sepsis por Pseudomonas (2025) y neutropenia febril (jun 2026).</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q16"><div><div class="q-title">Vacunas: ¿fecha para varicela y gripe? ¿Se vacunan también los convivientes?</div><div class="q-ctx">Varicela: ya puede recibirla. Gripe: recomendada.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q17"><div><div class="q-title">Alimentación: ¿pauta actual de Nutrición? ¿Cuándo cambiar la fórmula Infatrini Peptisorb? Una semana de hiporexia antes de la visita de septiembre: ¿qué hacer si se repite?</div><div class="q-ctx">Peso 10,1 kg (+0,4 DE OMS), sin sonda, curva ascendente.</div></div></label>
+    </div>
+  </div>
+
   <!-- ALERTAS -->
   <div id="tab-alertas" class="section">
     <div class="alert-box alert-danger"><strong>⚠ PROHIBIDO:</strong> Ibuprofeno · Paracetamol → usar siempre <strong>Metamizol</strong>.</div>
-    <div class="alert-box alert-danger"><strong>🚨 URGENCIA (fiebre o sangrado):</strong> Hospital más cercano + <strong>91 727 70 00</strong> → hepatólogo de guardia.</div>
-    <div class="alert-box alert-warn"><strong>Cambio de antibiótico pendiente:</strong> Ciprofloxacino hasta el 16 julio → Augmentine desde el 17 julio.</div>
-    <div class="alert-box alert-warn"><strong>Resultados pendientes al alta:</strong> Adenovirus (carga viral) · Toxoplasma PCR.</div>
-    <div class="alert-box alert-warn"><strong>Signos de colangitis:</strong> Fiebre, deposiciones acólicas, ictericia repentina, decaimiento.</div>
+    <div class="alert-box alert-danger"><strong>🚨 URGENCIA (fiebre o sangrado digestivo):</strong> Hospital más cercano + <strong>91 727 70 00</strong> → hepatólogo de guardia.</div>
+    <div class="alert-box alert-warn"><strong>Espironolactona:</strong> hay que suspenderla 2 semanas antes de la próxima consulta de hepatología. Anotar aquí la fecha de cita cuando se confirme.</div>
+    <div class="alert-box alert-warn"><strong>Signos de colangitis:</strong> Fiebre, deposiciones acólicas (blancas o grises), ictericia repentina, decaimiento. Las deposiciones "algo más claras de vez en cuando" están anotadas por hepatología; consultar si se vuelven blanquecinas de forma mantenida.</div>
     <div class="alert-box alert-warn"><strong>Hipertensión portal:</strong> Distensión abdominal brusca, vómitos con sangre, rectorragia.</div>
-    <div class="alert-box alert-info"><strong>AFP elevada (24,1):</strong> En seguimiento. Habitual en hepatopatías crónicas infantiles.</div>
-    <div class="alert-box alert-info"><strong>Plaquetas:</strong> Bajaron a 101 en el ingreso — se normalizaron al alta. Vigilar en próxima analítica.</div>
+    <div class="alert-box alert-info"><strong>AFP 16,3 ng/mL:</strong> subió desde 9,0 en julio. Sin lesiones focales en la ecografía del 14/09. Hepatología la repetirá en la próxima revisión.</div>
+    <div class="alert-box alert-info"><strong>Hemoglobina 10,7 g/dL:</strong> dentro de rango pero en el límite bajo y con tendencia descendente (13,3 en marzo). Pregunta útil para la próxima consulta.</div>
+    <div class="alert-box alert-ok"><strong>Situación estable (sep 2026):</strong> Sin colangitis desde dic 2025. GGT en mínimo histórico. BT normal. Hemograma recuperado. Neurología OK. Sin sonda. Camina sin apoyo.</div>
 
     <div class="card">
       <div class="card-title">Contactos médicos clave</div>
@@ -406,16 +536,17 @@
       <div class="contact-row"><span class="contact-label">📞 Secretaría hepatología</span><span class="contact-val">91 727 75 43</span></div>
       <div class="contact-row"><span class="contact-label">✉ Email hepatología</span><span class="contact-val">ihepato.hulp@salud.madrid.org</span></div>
       <div class="contact-row"><span class="contact-label">📞 Eco / resultados</span><span class="contact-val">91 727 74 79 (Dr. Climent)</span></div>
+      <div class="contact-row"><span class="contact-label">👩‍⚕️ Hepatóloga</span><span class="contact-val">Dra. Fernández Tomé</span></div>
     </div>
 
     <div class="card">
       <div class="card-title">Próximas citas y pendientes</div>
-      <div class="contact-row"><span class="contact-label">Hepatología</span><span class="contact-val"><span class="badge badge-danger">Pendiente — tras alta 7/7</span></span></div>
-      <div class="contact-row"><span class="contact-label">Cambio antibiótico</span><span class="contact-val"><span class="badge badge-warn">16/7 fin cipro → 17/7 Augmentine</span></span></div>
-      <div class="contact-row"><span class="contact-label">Toxoplasma / Adenovirus</span><span class="contact-val"><span class="badge badge-warn">Resultados pendientes</span></span></div>
-      <div class="contact-row"><span class="contact-label">Ecografía abdominal</span><span class="contact-val"><span class="badge badge-info">Pendiente de programar</span></span></div>
+      <div class="contact-row"><span class="contact-label">Hepatología</span><span class="contact-val"><span class="badge badge-danger">Fecha por confirmar</span></span></div>
+      <div class="contact-row"><span class="contact-label">Analítica + AFP</span><span class="contact-val"><span class="badge badge-warn">Con la próxima revisión</span></span></div>
+      <div class="contact-row"><span class="contact-label">Ecografía abdominal</span><span class="contact-val"><span class="badge badge-info">Solicitada</span></span></div>
+      <div class="contact-row"><span class="contact-label">Nutrición</span><span class="contact-val"><span class="badge badge-info">Seguimiento activo</span></span></div>
+      <div class="contact-row"><span class="contact-label">Vacunas</span><span class="contact-val" style="font-size:12px;">Varicela (puede recibirla) · Gripe (recomendada)</span></div>
       <div class="contact-row"><span class="contact-label">Neurología</span><span class="contact-val"><span class="badge badge-ok">Alta — no precisa</span></span></div>
-      <div class="contact-row"><span class="contact-label">Vacunas pendientes</span><span class="contact-val" style="font-size:12px;">3ª VHB · DTPa · VPI · Hib · Neumococo · Triple vírica</span></div>
     </div>
   </div>
 
@@ -430,7 +561,7 @@ function showTab(id, btn) {
   btn.classList.add('active');
 }
 function showAn(id) {
-  ['jul','may','abr','mar'].forEach(k => {
+  ['sep','jul','jun','may','abr','mar'].forEach(k => {
     document.getElementById('an-' + k).style.display = k === id ? '' : 'none';
     document.getElementById('btn-' + k).classList.toggle('active', k === id);
   });
@@ -439,48 +570,87 @@ function showAn(id) {
 const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
 const grid = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
 const tick = isDark ? '#B4B2A9' : '#5F5E5A';
+const scalesBase = (extraY) => ({
+  y: Object.assign({ ticks: { color: tick, font: { size: 11 } }, grid: { color: grid } }, extraY || {}),
+  x: { ticks: { color: tick, font: { size: 11 } }, grid: { display: false } }
+});
+const baseOpts = (extraY, legend) => ({ responsive: true, maintainAspectRatio: false, plugins: { legend: { display: !!legend, labels: { color: tick, font: { size: 11 } } } }, scales: scalesBase(extraY) });
+function line(id, labels, datasets, extraY, legend) {
+  new Chart(document.getElementById(id), { type: 'line', data: { labels, datasets }, options: baseOpts(extraY, legend) });
+}
+function ds(data, color, fill, extra) {
+  return Object.assign({ data, borderColor: color, backgroundColor: fill, pointBackgroundColor: color, pointRadius: 5, tension: 0.3, fill: true }, extra || {});
+}
+const amber = isDark ? '#EF9F27' : '#BA7517', amberF = isDark ? 'rgba(239,159,39,0.12)' : 'rgba(186,117,23,0.08)';
+const teal = isDark ? '#5DCAA5' : '#1D9E75', tealF = isDark ? 'rgba(93,202,165,0.12)' : 'rgba(29,158,117,0.08)';
+const red = isDark ? '#F09595' : '#A32D2D', redF = isDark ? 'rgba(240,149,149,0.12)' : 'rgba(163,45,45,0.08)';
+const purple = isDark ? '#AFA9EC' : '#534AB7', purpleF = isDark ? 'rgba(175,169,236,0.12)' : 'rgba(83,74,183,0.08)';
+const blue = isDark ? '#85B7EB' : '#185FA5';
 
 // GGT
-new Chart(document.getElementById('ggtChart'), {
-  type: 'line',
-  data: { labels: ['Ago 25','Oct 25','Ene 26','Mar 26','Abr 26','May 26'], datasets: [{ data: [599,1115,1901,1552,902,414], borderColor: isDark?'#EF9F27':'#BA7517', backgroundColor: isDark?'rgba(239,159,39,0.12)':'rgba(186,117,23,0.08)', pointBackgroundColor: isDark?'#FAC775':'#854F0B', pointRadius:5, tension:0.3, fill:true }] },
-  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{ticks:{color:tick,font:{size:11}},grid:{color:grid}}, x:{ticks:{color:tick,font:{size:11}},grid:{display:false}} } }
-});
+line('ggtChart', ['Ago 25','Oct 25','Ene 26','Mar 26','Abr 26','May 26','Jul 26','Sep 26'],
+  [ds([599,1115,1901,1552,902,414,392,337], amber, amberF)]);
+
+// Transaminasas
+line('transChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
+  [ds([456,173,186,186,233,150], red, 'transparent', { label: 'AST', fill: false }),
+   ds([435,201,162,165,216,200], blue, 'transparent', { label: 'ALT', fill: false })], {}, true);
 
 // Bilirrubina
-new Chart(document.getElementById('btChart'), {
-  type: 'line',
-  data: { labels: ['Ago 25','Sep 25','Ene 26','Mar 26','Abr 26','May 26','Jun 26'], datasets: [{ data: [8.1,3.5,2.18,0.91,0.63,0.31,0.33], borderColor: isDark?'#5DCAA5':'#1D9E75', backgroundColor: isDark?'rgba(93,202,165,0.12)':'rgba(29,158,117,0.08)', pointBackgroundColor: isDark?'#9FE1CB':'#0F6E56', pointRadius:5, tension:0.3, fill:true }] },
-  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{min:0,ticks:{callback:v=>v.toFixed(1),color:tick,font:{size:11}},grid:{color:grid}}, x:{ticks:{color:tick,font:{size:11}},grid:{display:false}} } }
-});
+line('btChart', ['Ago 25','Sep 25','Ene 26','Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
+  [ds([8.1,3.5,2.18,0.91,0.63,0.31,0.33,0.40,0.23], teal, tealF)], { min: 0, ticks: { callback: v => v.toFixed(1), color: tick, font: { size: 11 } } });
 
-// Plaquetas — ahora con 4 puntos incluyendo el ingreso de junio
-new Chart(document.getElementById('platChart'), {
-  type: 'line',
-  data: { labels: ['Mar 26','Abr 26','May 26','Jun 26'], datasets: [{ data: [209,182,155,101], borderColor: isDark?'#F09595':'#A32D2D', backgroundColor: isDark?'rgba(240,149,149,0.12)':'rgba(163,45,45,0.08)', pointBackgroundColor: [isDark?'#F7C1C1':'#791F1F',isDark?'#F7C1C1':'#791F1F',isDark?'#F7C1C1':'#791F1F','#ff0000'], pointRadius:[4,4,4,7], tension:0.3, fill:true }] },
-  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{min:60,max:260,ticks:{color:tick,font:{size:10}},grid:{color:grid}}, x:{ticks:{color:tick,font:{size:10}},grid:{display:false}} } }
-});
+// AFP
+line('afpChart', ['Mar 26','Abr 26','May 26','Jul 26','Sep 26'],
+  [ds([24.7,32.6,24.1,9.0,16.3], purple, purpleF)], { min: 0 });
+
+// Plaquetas
+line('platChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
+  [ds([209,182,155,101,198,178], red, redF, { pointRadius: [4,4,4,7,4,4], pointBackgroundColor: [red,red,red,'#ff0000',red,red] })],
+  { min: 60, max: 260, ticks: { color: tick, font: { size: 10 } }, grid: { color: grid } });
 
 // Leucocitos
-new Chart(document.getElementById('leucChart'), {
-  type: 'line',
-  data: { labels: ['Mar 26','Abr 26','May 26','Jun 26'], datasets: [{ data: [10.56,7.68,8.41,2.17], borderColor: isDark?'#AFA9EC':'#534AB7', backgroundColor: isDark?'rgba(175,169,236,0.12)':'rgba(83,74,183,0.08)', pointBackgroundColor: [isDark?'#CECBF6':'#3C3489',isDark?'#CECBF6':'#3C3489',isDark?'#CECBF6':'#3C3489','#ff0000'], pointRadius:[4,4,4,7], tension:0.3, fill:true }] },
-  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{min:0,max:14,ticks:{callback:v=>v.toFixed(1),color:tick,font:{size:10}},grid:{color:grid}}, x:{ticks:{color:tick,font:{size:10}},grid:{display:false}} } }
-});
+line('leucChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
+  [ds([10.56,7.68,8.41,2.17,8.51,6.70], purple, purpleF, { pointRadius: [4,4,4,7,4,4], pointBackgroundColor: [purple,purple,purple,'#ff0000',purple,purple] })],
+  { min: 0, max: 14, ticks: { callback: v => v.toFixed(1), color: tick, font: { size: 10 } }, grid: { color: grid } });
 
 // Hemoglobina
-new Chart(document.getElementById('hbChart'), {
-  type: 'line',
-  data: { labels: ['Mar 26','Abr 26','May 26','Jun 26'], datasets: [{ data: [13.3,12.5,13.0,11.5], borderColor: isDark?'#5DCAA5':'#1D9E75', backgroundColor: isDark?'rgba(93,202,165,0.12)':'rgba(29,158,117,0.08)', pointBackgroundColor: isDark?'#9FE1CB':'#0F6E56', pointRadius:5, tension:0.3, fill:true }] },
-  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{min:9,max:16,ticks:{callback:v=>v.toFixed(1),color:tick,font:{size:10}},grid:{color:grid}}, x:{ticks:{color:tick,font:{size:10}},grid:{display:false}} } }
-});
+line('hbChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
+  [ds([13.3,12.5,13.0,11.5,11.3,10.7], teal, tealF)],
+  { min: 9, max: 16, ticks: { callback: v => v.toFixed(1), color: tick, font: { size: 10 } }, grid: { color: grid } });
 
 // Peso
-new Chart(document.getElementById('weightChart'), {
-  type: 'line',
-  data: { labels: ['Sep 25','Oct 25','Dic 25','Ene 26','Mar 26','Abr 26','May 26'], datasets: [{ data: [4.71,5.24,6.10,7.12,8.30,8.40,8.90], borderColor: isDark?'#AFA9EC':'#534AB7', backgroundColor: isDark?'rgba(175,169,236,0.12)':'rgba(83,74,183,0.08)', pointBackgroundColor: isDark?'#CECBF6':'#3C3489', pointRadius:5, tension:0.3, fill:true }] },
-  options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}}, scales:{ y:{min:4,max:10,ticks:{callback:v=>v.toFixed(1)+' kg',color:tick,font:{size:11}},grid:{color:grid}}, x:{ticks:{color:tick,font:{size:11}},grid:{display:false}} } }
+line('weightChart', ['Sep 25','Oct 25','Dic 25','Ene 26','Mar 26','Abr 26','May 26','Jul 26','Sep 26'],
+  [ds([4.71,5.24,6.10,7.12,8.30,8.40,8.90,9.50,10.10], purple, purpleF)],
+  { min: 4, max: 11, ticks: { callback: v => v.toFixed(1) + ' kg', color: tick, font: { size: 11 } }, grid: { color: grid } });
+
+// Preguntas: checkboxes y fecha (guardado local)
+const LS = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+};
+document.querySelectorAll('.q-item input').forEach(cb => {
+  const item = cb.closest('.q-item');
+  cb.checked = LS.get('tati_q_' + cb.dataset.q) === '1';
+  item.classList.toggle('done', cb.checked);
+  cb.addEventListener('change', () => {
+    LS.set('tati_q_' + cb.dataset.q, cb.checked ? '1' : '0');
+    item.classList.toggle('done', cb.checked);
+  });
 });
+const nextVisit = document.getElementById('nextVisit');
+const spiroMsg = document.getElementById('spiroMsg');
+function updateSpiro() {
+  if (!nextVisit.value) { return; }
+  const d = new Date(nextVisit.value + 'T00:00:00');
+  const stop = new Date(d.getTime());
+  stop.setDate(stop.getDate() - 14);
+  const fmt = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+  spiroMsg.innerHTML = 'Dejar la espironolactona el <strong>' + stop.toLocaleDateString('es-ES', fmt) + '</strong> (2 semanas antes de la consulta del ' + d.toLocaleDateString('es-ES', fmt) + ').';
+}
+const savedVisit = LS.get('tati_next_visit');
+if (savedVisit) { nextVisit.value = savedVisit; updateSpiro(); }
+nextVisit.addEventListener('change', () => { LS.set('tati_next_visit', nextVisit.value); updateSpiro(); });
 </script>
 </body>
 </html>
