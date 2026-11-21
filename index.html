@@ -101,12 +101,30 @@
   .q-item.done .q-title { text-decoration: line-through; color: var(--text3); }
   .q-item.done .q-ctx { opacity: 0.6; }
   .date-input { font-size: 14px; padding: 6px 10px; border-radius: var(--radius); border: 1px solid var(--border2); background: var(--bg); color: var(--text); }
+
+  .edu-p { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
+  .edu-list { list-style: none; }
+  .edu-list li { font-size: 13px; color: var(--text2); line-height: 1.6; padding: 7px 0; border-bottom: 1px solid var(--border); }
+  .edu-list li:last-child { border-bottom: none; }
+  .edu-list strong { color: var(--text); }
+  details.g-group { padding: 0; }
+  details.g-group > summary { cursor: pointer; font-weight: 600; font-size: 14px; padding: 0.9rem 1.25rem; list-style: none; }
+  details.g-group > summary::-webkit-details-marker { display: none; }
+  details.g-group > summary::after { content: '+'; float: right; color: var(--text3); font-size: 18px; line-height: 1; }
+  details.g-group[open] > summary::after { content: '−'; }
+  .g-body { padding: 0 1.25rem 1rem; }
+  .g-item { padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+  .g-item:last-child { border-bottom: none; }
+  .g-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+  .g-name { font-size: 14px; font-weight: 600; }
+  .g-text { font-size: 12.5px; color: var(--text2); line-height: 1.6; margin-top: 2px; }
+  .visit-box { font-size: 15px; font-weight: 600; }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <div class="updated">Última revisión: 15 sep 2026 (informe de hepatología del 23/09/2026)</div>
+  <div class="updated">Última revisión: 10 nov 2026 (analítica del 27/10/2026) · <strong>Próxima cita: jueves 21 de enero de 2027, con analítica</strong></div>
 
   <div class="header">
     <div class="avatar">TJ</div>
@@ -123,41 +141,45 @@
     <button onclick="showTab('medicacion',this)">Medicación</button>
     <button onclick="showTab('analitica',this)">Analíticas</button>
     <button onclick="showTab('nutricion',this)">Nutrición</button>
-    <button onclick="showTab('preguntas',this)">Preguntas</button>
+    <button onclick="showTab('preguntas',this)">Información &amp; Preguntas</button>
     <button onclick="showTab('alertas',this)">Alertas &amp; contactos</button>
   </nav>
 
   <!-- RESUMEN -->
   <div id="tab-resumen" class="section active">
-    <div class="alert-box alert-ok">
-      <strong>&#8595; Buena evolución (sep 2026):</strong> GGT en su mínimo histórico (337 UI/L), bilirrubina normal (0,23), plaquetas y neutrófilos recuperados tras el ingreso de junio, sin fiebre ni colangitis desde dic 2025. Camina sin apoyo y la hepatomegalia ha bajado de 5 a 3 traveses desde mayo.
-    </div>
     <div class="alert-box alert-warn">
-      <strong>⚠ A seguir en la próxima revisión:</strong> alfafetoproteína 16,3 ng/mL (antes 9,0) — sin lesiones focales en la ecografía del 14/09; se repetirá el control. Hemoglobina 10,7 g/dL, en el límite bajo del rango.
+      <strong>⚠ Cambio de tendencia (revisión 10/11/2026):</strong> la hipertensión portal muestra signos de progresión: el bazo pasa de 7,7 a 8,9 cm, las plaquetas bajan de 178 a 147, la vena umbilical se ha repermeabilizado y hay una mínima lengüeta de líquido libre, por lo que se reintroduce la espironolactona (2,5 ml/24 h). GGT, transaminasas y ácidos biliares también han vuelto a subir. El informe lo describe como un aumento leve.
+    </div>
+    <div class="alert-box alert-ok">
+      <strong>Se mantiene bien:</strong> la función hepática sigue conservada (bilirrubina 0,38, INR 0,9, albúmina 4,1), sin ascitis clínica, sin sangrados, sin fiebre ni infecciones, con crecimiento ascendente (10,7 kg) y camina sin apoyo. La AFP bajó a 10,0.
     </div>
 
     <div class="grid2">
-      <div class="metric"><div class="metric-label">Edad</div><div class="metric-value">15 m</div><div class="metric-sub">Visita 15/09/2026</div></div>
-      <div class="metric"><div class="metric-label">Peso</div><div class="metric-value">10,1 kg</div><div class="metric-sub">DE +0,4 OMS · talla 76 cm</div></div>
-      <div class="metric"><div class="metric-label">GGT</div><div class="metric-value">337</div><div class="metric-sub">↓ mín. histórico · ref &lt;38</div></div>
-      <div class="metric"><div class="metric-label">Plaquetas</div><div class="metric-value">178</div><div class="metric-sub">×10³/µL · ref 186–422</div></div>
+      <div class="metric"><div class="metric-label">Peso</div><div class="metric-value">10,7 kg</div><div class="metric-sub">DE +0,5 OMS · talla 81 cm</div></div>
+      <div class="metric"><div class="metric-label">GGT</div><div class="metric-value" style="color:var(--warn-text)">447</div><div class="metric-sub">↑ desde 337 (sep) · ref &lt;38</div></div>
+      <div class="metric"><div class="metric-label">Plaquetas</div><div class="metric-value" style="color:var(--warn-text)">147</div><div class="metric-sub">×10³/µL · ref 186–422</div></div>
+      <div class="metric"><div class="metric-label">Bazo (eco)</div><div class="metric-value" style="color:var(--warn-text)">8,9 cm</div><div class="metric-sub">↑ desde 7,7 cm (sep)</div></div>
     </div>
 
     <div class="card">
       <div class="card-title">Diagnóstico principal</div>
-      <p style="font-size:14px;font-weight:600;margin-bottom:6px;">Atresia de vías biliares extrahepática — Kasai laparoscópico 21/08/2025</p>
-      <p style="font-size:13px;color:var(--text2);line-height:1.6;">Restablecimiento de flujo biliar mantenido. Evolución a hipertensión portal. Colangitis de repetición (último episodio dic 2025). Parámetros de síntesis conservados. Candidata a trasplante estudiada — <strong>sin contraindicación · no en lista de espera</strong>.</p>
+      <p style="font-size:14px;font-weight:600;margin-bottom:6px;">Atresia de vías biliares extrahepática no sindrómica — Kasai laparoscópico 21/08/2025</p>
+      <p style="font-size:13px;color:var(--text2);line-height:1.6;">Restablecimiento de flujo biliar mantenido. Evolución a hipertensión portal. Colangitis de repetición (último episodio dic 2025), con profilaxis continua con amoxicilina-clavulánico. Candidata a trasplante estudiada — <strong>sin contraindicación · no en lista de espera</strong>.</p>
     </div>
 
     <div class="card">
-      <div class="card-title">Diagnósticos activos</div>
+      <div class="card-title">Diagnósticos y hallazgos activos</div>
       <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
-        <span class="badge badge-danger">Hipertensión portal</span>
-        <span class="badge badge-warn">Colangitis de repetición (última dic 2025)</span>
-        <span class="badge badge-warn">Esplenomegalia 1,5 traveses · bazo 7,7 cm</span>
-        <span class="badge badge-warn">Hepatomegalia dura 3 traveses</span>
-        <span class="badge badge-info">Dilatación quística focal vía biliar 13×15×21 mm (estable)</span>
-        <span class="badge badge-warn">AFP levemente elevada (en control)</span>
+        <span class="badge badge-danger">Hipertensión portal en progresión</span>
+        <span class="badge badge-warn">Esplenomegalia: bazo 8,9 cm</span>
+        <span class="badge badge-warn">Mínima lengüeta de líquido perihepático</span>
+        <span class="badge badge-warn">Plaquetas 147</span>
+        <span class="badge badge-warn">Hepatomegalia dura 3 traveses · parénquima pseudonodular</span>
+        <span class="badge badge-info">Dilatación quística focal vía biliar 15×29×24 mm (algo mayor)</span>
+        <span class="badge badge-warn">Hemoglobina 10,3 · VCM 74,4 (glóbulos pequeños)</span>
+        <span class="badge badge-neutral">AFP 10,0 (en descenso)</span>
+        <span class="badge badge-neutral">Soplo sistólico I/VI en la exploración</span>
+        <span class="badge badge-neutral">Colangitis de repetición (última dic 2025)</span>
         <span class="badge badge-neutral">Trombosis crónica subclavia dcha.</span>
         <span class="badge badge-neutral">Antecedente sepsis Pseudomonas ×2</span>
         <span class="badge badge-ok">Desarrollo neuromotor normal</span>
@@ -165,17 +187,16 @@
     </div>
 
     <div class="card">
-      <div class="card-title">Estado en la última revisión — 15 sep 2026</div>
-      <p style="font-size:13px;color:var(--text2);line-height:1.7;">Ha estado bien, sin procesos febriles. Una semana previa con hiporexia sin otros síntomas. Deposiciones generalmente con color, a veces algo más claras. Sin coluria, ictericia, prurito, distensión abdominal ni sangrado digestivo. Deambula sin apoyo. Exploración: sin ascitis, hepatomegalia dura (3 traveses), esplenomegalia 1,5 traveses, leve circulación colateral. Ecografía 14/09: hepatomegalia de contorno lobulado con áreas pseudonodulares, sin lesiones focales, flujo portal 23 cm/s (mejorado), sin líquido libre — sin cambios significativos respecto a controles previos. Función de síntesis conservada (INR 0,9, albúmina 4,2).</p>
+      <div class="card-title">Estado en la última revisión — 10 nov 2026</div>
+      <p style="font-size:13px;color:var(--text2);line-height:1.7;">Ha estado bien, sin procesos intercurrentes ni fiebre. Deposiciones con color fluctuante, sin hipocolia. Sin coluria, ictericia, prurito, distensión abdominal ni sangrado digestivo. Deambula sin apoyo. No acude a guardería. Vacunas según calendario, incluida la gripe. <strong>Exploración:</strong> buena coloración, sin ictericia; pequeño hematoma en la mejilla derecha; soplo sistólico I/VI (en las exploraciones anteriores constaba ACP normal); abdomen sin ascitis, hepatomegalia dura (3 traveses), esplenomegalia 1,5 traveses, mínima circulación colateral. <strong>Ecografía (validada el 06/11):</strong> hepatomegalia de bordes lobulados con áreas pseudonodulares y sin lesiones focales; imagen quística/dilatación biliar de 15×29×24 mm, algo mayor que en la eco previa; hiperaflujo arterial hepático (IR 0,93); repermeabilización de la vena umbilical; circulación colateral periesplénica; bazo 8,9 cm; incipiente inversión de la ratio porta/esplénica; pequeñas láminas de líquido libre perihepático, poco significativas.</p>
     </div>
 
     <div class="card">
       <div class="card-title">Próximos pasos</div>
-      <div class="row"><span>Próxima revisión hepatología</span><span class="badge badge-danger">Fecha por confirmar</span></div>
-      <div class="row"><span>Espironolactona</span><span class="badge badge-warn">Suspender 2 semanas antes de la próxima consulta</span></div>
-      <div class="row"><span>Ecografía abdominal</span><span class="badge badge-info">Solicitada para el siguiente control</span></div>
-      <div class="row"><span>AFP</span><span class="badge badge-warn">Repetir en la próxima analítica</span></div>
-      <div class="row"><span>Vacunas pendientes</span><span style="font-size:12px;color:var(--text2);">Varicela (ya puede recibirla) · Gripe (recomendada)</span></div>
+      <div class="row"><span>Próxima revisión hepatología</span><span class="badge badge-danger">Jueves 21 enero 2027 · con analítica</span></div>
+      <div class="row"><span>Espironolactona</span><span class="badge badge-warn">Reintroducida: 2,5 ml cada 24 h</span></div>
+      <div class="row"><span>Cambios de dosis</span><span style="font-size:12px;color:var(--text2);">Auxina E 2 cáps · Vit D3 0,8 ml · Omeprazol 5 ml</span></div>
+      <div class="row"><span>Vacunas pendientes</span><span style="font-size:12px;color:var(--text2);">Varicela (gripe ya administrada)</span></div>
       <div class="row"><span>Nutrición</span><span class="badge badge-info">Seguimiento activo</span></div>
       <div class="row"><span>Trasplante</span><span style="font-size:12px;color:var(--text2);">Sin contraindicación · no en lista de espera</span></div>
     </div>
@@ -210,7 +231,8 @@
       <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">26 may 2026</div><div class="tl-title">Consulta hepatología + neurología</div><div class="tl-desc">GGT 414 ↓↓. BT 0,31. Peso 8,9kg / 72cm. Neurología: desarrollo normal, alta. Espironolactona 1×/día. Konakion cada 2 semanas. Hidropolivit suspendido.</div></div></div>
       <div class="tl-item"><div class="tl-dot dot-ing"></div><div><div class="tl-date">28 jun–7 jul 2026</div><div class="tl-title">Ingreso — neutropenia febril sin foco</div><div class="tl-desc">Fiebre 38°C, neutrófilos 0,41 y plaquetas 101 al ingreso. Sin cambios significativos en la función hepática. Microbiología negativa. Una semana de antibiótico IV (cefotaxima → pip-tazobactam + teicoplanina) y G-CSF (neupogen). Alta con hemograma normalizado. Ciprofloxacino hasta 16/7, luego Augmentine.</div></div></div>
       <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">28 jul 2026</div><div class="tl-title">Consulta hepatología (revisión post-ingreso)</div><div class="tl-desc">Peso 9,5kg / 74cm. Sin fiebre; neutrófilos y plaquetas normales (198). AST 233 · ALT 216 · GGT 392 · BT 0,40. AFP 9,0. Hepatomegalia 4 traveses, sin ascitis. Flujo portal 21 cm/s (mejorado), bazo 7,5 cm. Vit E alta, vit A baja (cociente A/RBP normal). Se solicita ecografía; puede recibir triple vírica y meningococo ACWY.</div></div></div>
-      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">14–15 sep 2026 ★</div><div class="tl-title">Eco abdominal + consulta hepatología — última revisión</div><div class="tl-desc">Peso 10,1kg / 76cm. Sin fiebre; una semana de hiporexia. AST 150 · ALT 200 · <strong>GGT 337 (mín. histórico)</strong> · BT 0,23. Plaquetas 178. AFP 16,3 (↑ desde 9,0; sin lesiones focales). Eco: dilatación quística focal 13×15×21mm sin cambios, porta 23 cm/s, bazo 7,7cm, sin líquido libre. Vit E alta → se baja Auxina E a 1 cápsula. Se programa suspender espironolactona 2 semanas antes de la próxima revisión. Triple vírica y ACWY ya administradas; puede recibir varicela; se recomienda gripe.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">14–15 sep 2026</div><div class="tl-title">Eco abdominal + consulta hepatología — última revisión</div><div class="tl-desc">Peso 10,1kg / 76cm. Sin fiebre; una semana de hiporexia. AST 150 · ALT 200 · <strong>GGT 337 (mín. histórico)</strong> · BT 0,23. Plaquetas 178. AFP 16,3 (↑ desde 9,0; sin lesiones focales). Eco: dilatación quística focal 13×15×21mm sin cambios, porta 23 cm/s, bazo 7,7cm, sin líquido libre. Vit E alta → se baja Auxina E a 1 cápsula. Se programa suspender espironolactona 2 semanas antes de la próxima revisión. Triple vírica y ACWY ya administradas; puede recibir varicela; se recomienda gripe.</div></div></div>
+      <div class="tl-item"><div class="tl-dot dot-con"></div><div><div class="tl-date">27 oct–10 nov 2026 ★</div><div class="tl-title">Analítica (27/10) + eco (validada 06/11) + consulta hepatología (10/11) — última revisión</div><div class="tl-desc">Peso 10,7kg / 81cm. Sin fiebre ni infecciones. AST 179 · ALT 263 · GGT 447 · BT 0,38 · ácidos biliares 52,1. Plaquetas 147, Hb 10,3, VCM 74,4. AFP 10,0 (↓). Eco: bazo 8,9cm, vena umbilical repermeabilizada, inversión incipiente de la ratio porta/esplénica, mínima lengüeta de líquido perihepático, dilatación biliar quística 15×29×24mm (algo mayor), IR arteria hepática 0,93. Se reintroduce espironolactona 2,5 ml/24h; Auxina E vuelve a 2 cápsulas; vitamina D3 baja a 0,8 ml; omeprazol sube a 5 ml. Gripe vacunada; varicela pendiente.</div></div></div>
     </div>
   </div>
 
@@ -218,16 +240,16 @@
   <div id="tab-medicacion" class="section">
     <div class="alert-box alert-danger"><strong>⚠ PROHIBIDO:</strong> Ibuprofeno · Paracetamol → usar siempre <strong>Metamizol (Metalgial gotas 500mg/ml — 4 gotas cada 8h)</strong>.</div>
     <div class="alert-box alert-danger"><strong>🚨 URGENCIA:</strong> Fiebre o sangrado digestivo → hospital más cercano + <strong>91 727 70 00</strong> (hepatólogo de guardia).</div>
-    <div class="alert-box alert-warn"><strong>Cambios recientes (15/09/2026):</strong> Auxina E baja a 1 cápsula/día · Espironolactona se suspende 2 semanas antes de la próxima consulta.</div>
+    <div class="alert-box alert-warn"><strong>Cambios en la pauta final del 10/11/2026:</strong> Espironolactona se reintroduce a 2,5 ml/24 h · Auxina E vuelve a 2 cápsulas · Vitamina D3 baja a 0,8 ml · Omeprazol sube a 5 ml. (La lista de la página 3 del informe es la pauta previa a la consulta; la vigente es la del final del informe.)</div>
 
     <div class="card">
-      <div class="card-title">Medicación vigente — informe 15/09/2026</div>
+      <div class="card-title">Medicación vigente — informe 10/11/2026</div>
       <div class="med-row"><div><div class="med-name">Augmentine (amox-clavulánico) 100mg/ml</div><div class="med-dose">1,4 ml · profilaxis continua</div></div><div class="med-freq">Cada 8h oral</div></div>
       <div class="med-row"><div><div class="med-name">Konakion Ped 2mg (Vitamina K)</div><div class="med-dose">1 ampolla los lunes</div></div><div class="med-freq">Cada 2 semanas</div></div>
-      <div class="med-row"><div><div class="med-name">Espironolactona 5mg/ml susp.</div><div class="med-dose">1,6 ml · <strong>suspender 2 semanas antes de la próxima consulta</strong></div></div><div class="med-freq">Cada 24h oral</div></div>
-      <div class="med-row"><div><div class="med-name">Auxina E 50mg (Vitamina E) <span class="badge badge-warn" style="font-size:10px;">dosis bajada</span></div><div class="med-dose"><strong>1 cápsula = 50 mg</strong> (antes 2 cápsulas) · vit E en sangre alta</div></div><div class="med-freq">1×/día oral</div></div>
-      <div class="med-row"><div><div class="med-name">Vitamina D3 2000 UI/ml</div><div class="med-dose">1 ml = 2000 UI</div></div><div class="med-freq">1×/día oral</div></div>
-      <div class="med-row"><div><div class="med-name">Omeprazol 2mg/ml susp.</div><div class="med-dose">4 ml</div></div><div class="med-freq">1×/día oral</div></div>
+      <div class="med-row"><div><div class="med-name">Espironolactona 5mg/ml susp. <span class="badge badge-warn" style="font-size:10px;">reintroducida</span></div><div class="med-dose"><strong>2,5 ml</strong> (antes 1,6 ml; estaba suspendida desde septiembre)</div></div><div class="med-freq">Cada 24h oral</div></div>
+      <div class="med-row"><div><div class="med-name">Auxina E 50mg (Vitamina E) <span class="badge badge-warn" style="font-size:10px;">dosis subida</span></div><div class="med-dose"><strong>2 cápsulas = 100 mg</strong> (se había bajado a 1 el 15/09)</div></div><div class="med-freq">1×/día oral</div></div>
+      <div class="med-row"><div><div class="med-name">Vitamina D3 2000 UI/ml <span class="badge badge-warn" style="font-size:10px;">dosis bajada</span></div><div class="med-dose"><strong>0,8 ml</strong> (antes 1 ml)</div></div><div class="med-freq">1×/día oral</div></div>
+      <div class="med-row"><div><div class="med-name">Omeprazol 2mg/ml susp. <span class="badge badge-warn" style="font-size:10px;">dosis subida</span></div><div class="med-dose"><strong>5 ml</strong> (antes 4 ml)</div></div><div class="med-freq">1×/día oral</div></div>
       <div class="med-row"><div><div class="med-name">Ácido ursodesoxicólico 25mg/ml</div><div class="med-dose">2 ml</div></div><div class="med-freq">Cada 12h oral</div></div>
       <div class="med-row"><div><div class="med-name">Polaramine susp 2mg/5ml <span class="badge badge-neutral" style="font-size:10px;">si prurito</span></div><div class="med-dose">1 ml · a demanda (pauta de hepatología)</div></div><div class="med-freq">Cada 8h oral</div></div>
       <div class="med-row"><div><div class="med-name">Metamizol (Metalgial) 500mg/ml <span class="badge badge-neutral" style="font-size:10px;">si fiebre/dolor</span></div><div class="med-dose">4 gotas · a demanda (pauta de hepatología)</div></div><div class="med-freq">Cada 8h oral</div></div>
@@ -236,7 +258,7 @@
     <div class="card">
       <div class="card-title">Finalizada / suspendida</div>
       <div class="med-row"><div><div class="med-name strikethrough">Ciprofloxacino 100mg/ml 0,9ml c/12h</div><div class="med-dose">Pauta tras el ingreso de junio; terminó el 16/07/2026 y se retomó Augmentine.</div></div></div>
-      <div class="med-row"><div><div class="med-name strikethrough">Mycostatin (nistatina) — candidiasis oral</div><div class="med-dose">Tratamiento puntual; no figura en los informes de julio ni septiembre.</div></div></div>
+      <div class="med-row"><div><div class="med-name strikethrough">Mycostatin (nistatina) — candidiasis oral</div><div class="med-dose">Tratamiento puntual; no figura en los informes posteriores.</div></div></div>
       <div class="med-row"><div><div class="med-name strikethrough">Hidropolivit / Protovit</div><div class="med-dose">Suspendido mayo 2026.</div></div></div>
       <div class="med-row"><div><div class="med-name strikethrough">Hibor (bemiparina)</div><div class="med-dose">Suspendido dic 2025. Reiniciado brevemente en el ingreso de jun 2026 y retirado al 2º día.</div></div></div>
     </div>
@@ -245,7 +267,8 @@
   <!-- ANALÍTICAS -->
   <div id="tab-analitica" class="section">
     <div class="tab-btns">
-      <button class="active" id="btn-sep" onclick="showAn('sep')">15 sep 2026 ★</button>
+      <button class="active" id="btn-oct" onclick="showAn('oct')">27 oct 2026 ★</button>
+      <button id="btn-sep" onclick="showAn('sep')">15 sep 2026</button>
       <button id="btn-jul" onclick="showAn('jul')">28 jul 2026</button>
       <button id="btn-jun" onclick="showAn('jun')">28 jun 2026</button>
       <button id="btn-may" onclick="showAn('may')">26 may 2026</button>
@@ -253,8 +276,74 @@
       <button id="btn-mar" onclick="showAn('mar')">12 mar 2026</button>
     </div>
 
+    <!-- OCTUBRE 2026 -->
+    <div id="an-oct">
+      <div class="card">
+        <div class="card-title">Función hepática — 27 octubre 2026</div>
+        <div class="lab-row"><span class="lab-name">AST (GOT)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">179 UI/L</div><div class="lab-ref">Ref &lt;95 ↑ · 150 en sep</div></div></div>
+        <div class="lab-row"><span class="lab-name">ALT (GPT)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">263 UI/L</div><div class="lab-ref">Ref &lt;35 ↑ · 200 en sep</div></div></div>
+        <div class="lab-row"><span class="lab-name">GGT</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">447 UI/L</div><div class="lab-ref">Ref &lt;38 ↑ · sube desde 337 (sep)</div></div></div>
+        <div class="lab-row"><span class="lab-name">Fosfatasa alcalina</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">919 UI/L</div><div class="lab-ref">Ref 142–337 ↑ · 729 en sep</div></div></div>
+        <div class="lab-row"><span class="lab-name">Bilirrubina total</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,38 mg/dl ✓</div><div class="lab-ref">Ref 0,30–1,20</div></div></div>
+        <div class="lab-row"><span class="lab-name">Ácidos biliares totales</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">52,10 µmol/L</div><div class="lab-ref">Ref &lt;10 ↑ · 34,5 en sep · el laboratorio avisa de que no es fiable con ursodesoxicólico</div></div></div>
+        <div class="lab-row"><span class="lab-name">LDH</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">265 UI/L ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Colinesterasa</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">7991 UI/L</div><div class="lab-ref">Ref 7000–19000 · cerca del límite bajo (9032 jul → 8463 sep → 7991)</div></div></div>
+        <div class="lab-row"><span class="lab-name">AFP (alfafetoproteína)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">10,0 ng/mL</div><div class="lab-ref">Ref &lt;8 ↑ leve · baja desde 16,3 (sep)</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Síntesis hepática y proteínas — 27 octubre 2026</div>
+        <div class="lab-row"><span class="lab-name">INR</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,9 ✓</div><div class="lab-ref">Actividad protrombina &gt;120% · TTPA 23,9 s</div></div></div>
+        <div class="lab-row"><span class="lab-name">Fibrinógeno</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">341 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Albúmina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">4,1 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Proteínas totales</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">6,1 g/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Prealbúmina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10,3 mg/dL</div><div class="lab-ref">Ref 10–40 · en el límite bajo</div></div></div>
+        <div class="lab-row"><span class="lab-name">Proteína transportadora de retinol (RBP)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">1,6 mg/dL</div><div class="lab-ref">Ref 3,0–6,0 ↓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Vitaminas — 27 octubre 2026</div>
+        <div class="lab-row"><span class="lab-name">Vitamina D</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">62 ng/mL ✓</div><div class="lab-ref">Suficiencia 30–100 · se baja D3 a 0,8 ml</div></div></div>
+        <div class="lab-row"><span class="lab-name">Vitamina E</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">11,81 µg/mL ✓</div><div class="lab-ref">Ref 6,30–14,20 · cociente E/colesterol 5,8 (ref 6,0–12,0), ligeramente bajo → Auxina E vuelve a 2 cápsulas</div></div></div>
+        <div class="lab-row"><span class="lab-name">Vitamina A</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">0,20 µg/mL ↓</div><div class="lab-ref">Ref 0,30–0,50 · cociente A/RBP 0,9 ✓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Hemograma — 27 octubre 2026</div>
+        <div class="lab-row"><span class="lab-name">Plaquetas</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">147 ×10³/µL ↓</div><div class="lab-ref">Ref 186–422 · 178 en sep · "en torno a 150.000" según el informe</div></div></div>
+        <div class="lab-row"><span class="lab-name">Leucocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">5,78 ×10³/µL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Neutrófilos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">2,10 ×10³/µL (36,3%) ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Linfocitos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">2,96 ×10³/µL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hemoglobina</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10,3 g/dL</div><div class="lab-ref">Ref 10,1–14,9 · en el límite bajo (10,7 en sep)</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hematocrito</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">32,5% ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">VCM</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">74,4 fL</div><div class="lab-ref">Ref 67,9–90,5 · baja en cada control (90,8 jun → 84,0 → 79,8 → 74,4)</div></div></div>
+        <div class="lab-row"><span class="lab-name">RDW</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">14,6%</div><div class="lab-ref">Ref 11,6–14,3 ↑ leve</div></div></div>
+        <div class="lab-row"><span class="lab-name">Glóbulos rojos microcíticos</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">14,5%</div><div class="lab-ref">5,6% en sep</div></div></div>
+        <div class="lab-row"><span class="lab-name">Hematíes / HCM / CHCM</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">4,37 / 23,6 pg / 31,7 ✓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Otras determinaciones — 27 octubre 2026</div>
+        <div class="lab-row"><span class="lab-name">Glucosa</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">115 mg/dL</div><div class="lab-ref">Ref 60–100 · leve ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Creatinina / Urato</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">0,21 / 2,5 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Colesterol total / HDL / LDL</span><div style="text-align:right"><div class="lab-val">203 / 90 / 94 mg/dL</div><div class="lab-ref">Total ref &lt;200 · leve ↑</div></div></div>
+        <div class="lab-row"><span class="lab-name">Triglicéridos</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">94 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">Calcio total (ajustado) / Fosfato</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10,3 (10,2) / 5,0 mg/dL ✓</div></div></div>
+        <div class="lab-row"><span class="lab-name">VSG</span><div style="text-align:right"><div class="lab-val" style="color:var(--ok-text)">10 mm/h ✓</div></div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Ecografía abdominal con Doppler — validada 6 noviembre 2026</div>
+        <div class="row"><span>Hígado</span><span style="text-align:right;max-width:65%">Hepatomegalia de bordes lobulados, ecogenicidad heterogénea, áreas pseudonodulares, hiperecogenicidad periportal. <strong>Sin lesiones focales definidas.</strong></span></div>
+        <div class="row"><span>Imagen quística</span><span style="text-align:right;max-width:65%">Intraparenquimatosa derecha 15×29×24 mm, paredes lisas gruesas y ecogénicas, posible imagen lineal inferior. Sugestiva de dilatación quística focal de la vía biliar, <strong>algo mayor que en la eco previa</strong> (13×15×21 mm).</span></div>
+        <div class="row"><span>Vena porta</span><span style="text-align:right;max-width:65%">4,9 mm · flujo hepatópeto · 23 cm/s (estable)</span></div>
+        <div class="row"><span>Arteria hepática</span><span style="text-align:right;max-width:65%">Hiperaflujo arterial: velocidad picosistólica 81 cm/s, <strong>IR 0,93</strong> (0,84 en sep)</span></div>
+        <div class="row"><span>Venas suprahepáticas / cava</span><span style="text-align:right;max-width:65%">Comprimidas pero permeables, onda bifásica / cava permeable</span></div>
+        <div class="row"><span>Vena umbilical</span><span style="text-align:right;max-width:65%"><strong>Repermeabilizada</strong></span></div>
+        <div class="row"><span>Bazo</span><span style="text-align:right;max-width:65%"><strong>8,9 cm</strong> (7,7 cm en la eco previa), homogéneo · vena esplénica permeable, 24 cm/s · circulación colateral periesplénica · incipiente inversión de la ratio porta/esplénica</span></div>
+        <div class="row"><span>Líquido libre</span><span style="text-align:right;max-width:65%">Pequeñas láminas perihepáticas, poco significativas. Sin ascitis en cantidad significativa.</span></div>
+        <div class="row"><span>Riñones</span><span style="text-align:right;max-width:65%">Sin alteraciones</span></div>
+        <p class="note-box">Conclusión del informe: signos de hepatopatía; dilatación quística focal de la vía biliar algo mayor; repermeabilización de la vena umbilical; esplenomegalia algo mayor con incipiente inversión de la ratio porta/esplénica.</p>
+      </div>
+    </div>
+
     <!-- SEPTIEMBRE 2026 -->
-    <div id="an-sep">
+    <div id="an-sep" style="display:none">
       <div class="card">
         <div class="card-title">Función hepática — 15 septiembre 2026</div>
         <div class="lab-row"><span class="lab-name">AST (GOT)</span><div style="text-align:right"><div class="lab-val" style="color:var(--warn-text)">150 UI/L</div><div class="lab-ref">Ref &lt;95 ↑ · bajó desde 233 (jul)</div></div></div>
@@ -422,8 +511,17 @@
       <div style="position:relative;width:100%;height:180px;"><canvas id="afpChart"></canvas></div>
     </div>
     <div class="card">
+      <div class="card-title">Tamaño del bazo en ecografía (cm)</div>
+      <div style="position:relative;width:100%;height:180px;"><canvas id="spleenChart"></canvas></div>
+      <p class="note-box">Las medidas proceden de ecografías distintas y pueden variar según quién las realice.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Evolución del tamaño de los glóbulos rojos — VCM (fL) · ref 67,9–90,5</div>
+      <div style="position:relative;width:100%;height:180px;"><canvas id="mcvChart"></canvas></div>
+    </div>
+    <div class="card">
       <div class="card-title">Evolución hemograma</div>
-      <p class="note-box" style="margin-bottom:12px;">El punto rojo de junio 2026 corresponde al ingreso por neutropenia febril; plaquetas y neutrófilos se normalizaron y se mantienen en rango desde julio.</p>
+      <p class="note-box" style="margin-bottom:12px;">El punto rojo de junio 2026 corresponde al ingreso por neutropenia febril; los neutrófilos se normalizaron y se mantienen en rango. Las plaquetas se recuperaron en julio pero vuelven a bajar (147 en octubre). La hemoglobina y el VCM descienden en cada control.</p>
       <div class="charts-grid">
         <div>
           <p class="chart-label">Plaquetas (×10³/µL) <span>· ref 186–422</span></p>
@@ -456,12 +554,14 @@
       <div class="row"><span style="font-size:12px">Abr 26 (10m)</span><span style="font-size:12px">8,40 kg</span><span style="font-size:12px">69,5 cm</span><span style="font-size:12px;color:var(--text2)">-0,1</span></div>
       <div class="row"><span style="font-size:12px">May 26 (11m)</span><span style="font-size:12px">8,90 kg</span><span style="font-size:12px">72 cm</span><span style="font-size:12px;color:var(--text2)">+0,2</span></div>
       <div class="row"><span style="font-size:12px">Jul 26 (13m)</span><span style="font-size:12px">9,50 kg</span><span style="font-size:12px">74 cm</span><span style="font-size:12px;color:var(--text2)">+0,3</span></div>
-      <div class="row"><span style="font-size:12px;font-weight:600">Sep 26 (15m) ★</span><span style="font-size:12px;font-weight:600">10,10 kg</span><span style="font-size:12px;font-weight:600">76 cm</span><span style="font-size:12px;color:var(--ok-text);font-weight:600">+0,4 ↑</span></div>
+      <div class="row"><span style="font-size:12px">Sep 26 (15m)</span><span style="font-size:12px">10,10 kg</span><span style="font-size:12px">76 cm</span><span style="font-size:12px;color:var(--text2)">+0,4</span></div>
+      <div class="row"><span style="font-size:12px;font-weight:600">Nov 26 (16m) ★</span><span style="font-size:12px;font-weight:600">10,70 kg</span><span style="font-size:12px;font-weight:600">81 cm</span><span style="font-size:12px;color:var(--ok-text);font-weight:600">+0,5 ↑</span></div>
     </div>
     <div class="card">
-      <div class="card-title">Estado nutricional — sep 2026</div>
+      <div class="card-title">Estado nutricional — nov 2026</div>
       <p style="font-size:13px;color:var(--text2);line-height:1.8;">
-        Mejoría nutricional mantenida desde el último episodio de colangitis. <strong>Sin sonda nasogástrica.</strong> Curva ponderoestatural ascendente. IMC 17,49 (+1,0 DE OMS). Talla -0,6 DE OMS. Superficie corporal 0,46 m². Seguimiento activo en Nutrición.<br>
+        Peso 10,7 kg (+0,5 DE OMS), talla 81 cm (+0,5 DE OMS), IMC 16,31, superficie corporal 0,49 m². Sin sonda nasogástrica, curva ponderoestatural ascendente y camina sin apoyo. Seguimiento activo en Nutrición.<br>
+        <em>Nota: la talla pasa de 76 cm (sep) a 81 cm (nov); es un salto grande para dos meses y puede deberse a la forma de medir.</em><br>
         <strong>Última pauta alimentaria documentada (mayo 2026):</strong> Infatrini Peptisorb 5 tomas de 120–160 ml/día + purés variados (pescado, huevo, carne, frutos secos) y fruta. <em>Pendiente de actualizar con la pauta vigente de Nutrición.</em>
       </p>
     </div>
@@ -473,48 +573,145 @@
 
   <!-- PREGUNTAS -->
   <div id="tab-preguntas" class="section">
-    <div class="alert-box alert-info">Lista para llevar a la próxima consulta de hepatología. Marca las que ya se hayan aclarado (se guarda en este dispositivo). Los datos entre paréntesis son los de los informes de 2026.</div>
+    <div class="alert-box alert-info">Aquí tienes una guía sencilla para entender los informes y la lista de preguntas para la próxima consulta. Los valores de Tati que aparecen son los de la analítica del 27/10/2026.</div>
 
     <div class="card">
-      <div class="card-title">Próxima consulta de hepatología</div>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;">
-        <input type="date" id="nextVisit" class="date-input">
-        <span id="spiroMsg" style="font-size:13px;color:var(--text2);">Introduce la fecha de la cita para calcular cuándo suspender la espironolactona (2 semanas antes).</span>
-      </div>
-      <p class="note-box">La fecha se guarda solo en este dispositivo. El informe del 15/09 no indica fecha de cita.</p>
+      <div class="card-title">Próxima consulta de hepatología y analítica</div>
+      <p class="visit-box">Jueves 21 de enero de 2027</p>
+      <p id="visitCountdown" style="font-size:13px;color:var(--text2);margin-top:2px;"></p>
+      <p class="note-box">Lleva la lista de preguntas de esta pestaña. La espironolactona sigue su pauta actual (2,5 ml/24 h); ya no hay que suspenderla antes de la consulta.</p>
     </div>
 
+    <div class="tab-btns">
+      <button class="active" id="subbtn-q" onclick="showSub('q')">Preguntas para la consulta</button>
+      <button id="subbtn-g" onclick="showSub('g')">El hígado y el bazo</button>
+      <button id="subbtn-m" onclick="showSub('m')">Qué miden las pruebas</button>
+    </div>
+
+    <div id="sub-q">
+    <p class="note-box" style="margin:0 0 10px;">Marca las preguntas que ya se hayan aclarado (se guarda en este dispositivo). Los datos entre paréntesis son los de los informes de 2026.</p>
+
     <div class="card">
-      <div class="card-title">1 · Resultados que conviene aclarar</div>
-      <label class="q-item"><input type="checkbox" data-q="q1"><div><div class="q-title">Hemoglobina y tamaño de los glóbulos rojos: ¿hace falta estudiar el hierro (ferritina, hierro, saturación de transferrina)?</div><div class="q-ctx">Hemoglobina 13,3 (mar) → 10,7 (sep). VCM 90,8 (jun) → 79,8 (sep). Glóbulos microcíticos 0,7% → 5,6%.</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q2"><div><div class="q-title">Alfafetoproteína 16,3 (antes 9,0): ¿cuándo se repite y con qué prueba de imagen?</div><div class="q-ctx">Sin lesiones focales en la ecografía del 14/09. Pico de 32,6 en abril.</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q3"><div><div class="q-title">Vitamina A baja con cociente A/RBP normal: ¿hay que suplementarla?</div><div class="q-ctx">Vitamina A 0,22 (ref 0,30–0,50), cociente A/RBP 1,0. Hidropolivit se suspendió en mayo.</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q4"><div><div class="q-title">Vitamina E alta: ¿cuándo se repite tras bajar Auxina E a 1 cápsula?</div><div class="q-ctx">Vitamina E 16,25 (ref 6,30–14,20); el cociente con el colesterol es normal (7,9).</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q5"><div><div class="q-title">Ácidos biliares 34,5: ¿cómo se interpretan si el laboratorio avisa de que no son fiables con ursodesoxicólico?</div><div class="q-ctx">El informe dice que disminuyen progresivamente.</div></div></label>
+      <div class="card-title">1 · Resultados y cambios de tendencia</div>
+      <label class="q-item"><input type="checkbox" data-q="q2n"><div><div class="q-title">GGT, ALT y ácidos biliares han vuelto a subir después de bajar: ¿qué lo explica y es motivo de preocupación?</div><div class="q-ctx">GGT 392 (jul) → 337 (sep) → 447 (oct). ALT 200 → 263. Ácidos biliares 34,5 → 52,1 (el laboratorio avisa de que no es fiable con ursodesoxicólico). Bilirrubina 0,38 e INR 0,9, normales.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q1n"><div><div class="q-title">Hemoglobina y tamaño de los glóbulos rojos: ¿hace falta estudiar el hierro (ferritina, hierro, saturación de transferrina)?</div><div class="q-ctx">Hemoglobina 13,3 (mar) → 10,3 (oct). VCM 90,8 (jun) → 74,4 (oct). Glóbulos microcíticos 0,7% → 14,5%. RDW 14,6 (ref hasta 14,3). El informe no menciona el hierro.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q5n"><div><div class="q-title">AFP 10,0 (antes 16,3): ¿cuándo se repite?</div><div class="q-ctx">Pico de 32,6 en abril; 9,0 en julio; 16,3 en septiembre; 10,0 en octubre. Sin lesiones focales en las ecografías.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q3"><div><div class="q-title">Vitamina A baja con cociente A/RBP normal: ¿hay que suplementarla?</div><div class="q-ctx">Vitamina A 0,20 (ref 0,30–0,50), cociente A/RBP 0,9. Sin suplemento desde mayo (Hidropolivit).</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q4n"><div><div class="q-title">Vitaminas E y D: ¿cuándo se repiten tras los cambios de dosis?</div><div class="q-ctx">Auxina E vuelve a 2 cápsulas (vitamina E 11,81, cociente con colesterol 5,8, ref 6,0–12,0). Vitamina D3 baja a 0,8 ml (vitamina D 62 ng/mL).</div></div></label>
     </div>
 
     <div class="card">
       <div class="card-title">2 · Hipertensión portal y evolución del hígado</div>
-      <label class="q-item"><input type="checkbox" data-q="q6"><div><div class="q-title">Ecografía: ¿los hallazgos de contorno lobulado y áreas pseudonodulares son nuevos? ¿Indican fibrosis avanzada o cirrosis?</div><div class="q-ctx">Eco 14/09: contorno lobulado, áreas pseudonodulares, arteria hepática hiperdinámica (IR 0,84), bazo globuloso en el límite alto (7,7 cm). El informe concluye "sin cambios significativos".</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q7"><div><div class="q-title">¿Está indicado un cribado de varices esofágicas (endoscopia) o se vigila con plaquetas y tamaño del bazo? ¿Con qué criterios?</div><div class="q-ctx">Nunca ha sangrado. Circulación colateral leve. Plaquetas 178.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q6n"><div><div class="q-title">Eco: ¿qué significan la repermeabilización de la vena umbilical, la inversión incipiente de la ratio porta/esplénica y el aumento del flujo arterial (IR 0,93)? ¿Indican que la hipertensión portal avanza?</div><div class="q-ctx">Bazo 7,7 → 8,9 cm, plaquetas 178 → 147, circulación colateral periesplénica, hepatomegalia lobulada con áreas pseudonodulares. El informe habla de aumento leve.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q10n"><div><div class="q-title">Espironolactona reintroducida a 2,5 ml/24 h: ¿durante cuánto tiempo, con qué controles (sodio, potasio, función renal) y qué signos vigilar?</div><div class="q-ctx">Antes 1,6 ml; estuvo suspendida desde septiembre. Mínima lengüeta de líquido libre perihepático, sin ascitis clínica.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q18"><div><div class="q-title">Dilatación quística de la vía biliar más grande: ¿riesgo de colangitis, vigilancia o tratamiento?</div><div class="q-ctx">15×29×24 mm, paredes gruesas y ecogénicas, posible imagen lineal inferior (13×15×21 mm en sep). Profilaxis continua con Augmentine.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q7"><div><div class="q-title">¿Está indicado un cribado de varices esofágicas (endoscopia) o se vigila con plaquetas y tamaño del bazo? ¿Con qué criterios?</div><div class="q-ctx">Nunca ha sangrado. Circulación colateral mínima y periesplénica. Plaquetas 147, bazo 8,9 cm.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q9n"><div><div class="q-title">Plaquetas y bazo: ¿a partir de qué cifra o tamaño actuarían?</div><div class="q-ctx">Plaquetas 209 → 182 → 155 → 101 (ingreso) → 198 → 178 → 147. Bazo 7,5 (jul) → 7,7 (sep) → 8,9 cm (nov).</div></div></label>
       <label class="q-item"><input type="checkbox" data-q="q8"><div><div class="q-title">¿Se puede medir la rigidez del hígado (elastografía) para seguir la fibrosis? ¿Se repetirá alguna biopsia?</div><div class="q-ctx">Biopsia del Kasai (ago 2025): Ishak 2 / Metavir F2 como mínimo, en una muestra escasa.</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q9"><div><div class="q-title">Plaquetas y bazo: ¿a partir de qué cifra o tamaño les preocuparía?</div><div class="q-ctx">Plaquetas 209 → 182 → 155 → 101 (ingreso) → 198 → 178. Bazo 7,5 → 7,7 cm.</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q10"><div><div class="q-title">Al retirar la espironolactona: ¿qué signos vigilar (hinchazón abdominal, aumento brusco de peso)? ¿Cuándo se vuelve a empezar?</div><div class="q-ctx">Lleva 1,6 ml cada 24 h. Sin ascitis en las ecografías de julio y septiembre.</div></div></label>
     </div>
 
     <div class="card">
       <div class="card-title">3 · Trasplante</div>
-      <label class="q-item"><input type="checkbox" data-q="q11"><div><div class="q-title">¿Qué criterios concretos usa el equipo para plantear la inclusión en lista? ¿Qué parámetros miran en cada revisión?</div><div class="q-ctx">Hoy: estudio realizado, sin contraindicación, no incluida en lista.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q11n"><div><div class="q-title">¿Los cambios de esta revisión modifican el plan o la frecuencia de controles? ¿Qué criterios concretos usan para plantear la inclusión en lista?</div><div class="q-ctx">Hoy: estudio realizado, sin contraindicación, no incluida en lista (informe 10/11).</div></div></label>
       <label class="q-item"><input type="checkbox" data-q="q12"><div><div class="q-title">Si llegara el momento: ¿cómo sería el proceso (donante fallecido o vivo) y qué conviene adelantar?</div><div class="q-ctx">Sirve para ir preparándose con calma, no indica que haga falta ahora.</div></div></label>
     </div>
 
     <div class="card">
       <div class="card-title">4 · Día a día</div>
-      <label class="q-item"><input type="checkbox" data-q="q13"><div><div class="q-title">Deposiciones "algo más claras en ocasiones": ¿qué color o duración debe hacernos acudir? ¿Conviene guardar fotos?</div><div class="q-ctx">Informes de jul y sep: color presente, a veces más claras.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q20"><div><div class="q-title">Soplo sistólico I/VI en la exploración y pequeño hematoma en la mejilla: ¿es un soplo funcional (por ejemplo, por la anemia) o hay que valorarlo? ¿Cuándo preocuparse por hematomas con plaquetas en 147?</div><div class="q-ctx">En las exploraciones anteriores constaba ACP normal. INR 0,9, sin otros sangrados.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q13n"><div><div class="q-title">Deposiciones con "color fluctuante": ¿qué color o duración debe hacernos acudir? ¿Conviene guardar fotos?</div><div class="q-ctx">Informe de nov: con color, sin hipocolia, sin coluria.</div></div></label>
       <label class="q-item"><input type="checkbox" data-q="q14"><div><div class="q-title">Augmentine continuo: ¿hasta cuándo? ¿Qué hacer si vuelve el muguet?</div><div class="q-ctx">Profilaxis desde el 6/4/2026. Hubo muguet tratado con Mycostatin.</div></div></label>
       <label class="q-item"><input type="checkbox" data-q="q15"><div><div class="q-title">Ante fiebre: ¿protocolo exacto? ¿Siempre a urgencias de La Paz?</div><div class="q-ctx">Antecedentes: sepsis por Pseudomonas (2025) y neutropenia febril (jun 2026).</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q16"><div><div class="q-title">Vacunas: ¿fecha para varicela y gripe? ¿Se vacunan también los convivientes?</div><div class="q-ctx">Varicela: ya puede recibirla. Gripe: recomendada.</div></div></label>
-      <label class="q-item"><input type="checkbox" data-q="q17"><div><div class="q-title">Alimentación: ¿pauta actual de Nutrición? ¿Cuándo cambiar la fórmula Infatrini Peptisorb? Una semana de hiporexia antes de la visita de septiembre: ¿qué hacer si se repite?</div><div class="q-ctx">Peso 10,1 kg (+0,4 DE OMS), sin sonda, curva ascendente.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q16n"><div><div class="q-title">Vacuna de la varicela: ¿fecha y alguna precaución?</div><div class="q-ctx">Pendiente. La gripe ya está administrada. No acude a guardería.</div></div></label>
+      <label class="q-item"><input type="checkbox" data-q="q17"><div><div class="q-title">Alimentación: ¿pauta actual de Nutrición? ¿Cuándo cambiar la fórmula Infatrini Peptisorb?</div><div class="q-ctx">Peso 10,7 kg (+0,5 DE OMS), sin sonda, curva ascendente. La talla de 76 a 81 cm en dos meses merece confirmarse.</div></div></label>
+    </div>
+    </div><!-- /sub-q -->
+
+    <div id="sub-g" style="display:none">
+    <div class="card">
+      <div class="card-title">El hígado: la gran fábrica del cuerpo</div>
+      <ul class="edu-list">
+        <li><strong>Fabrica la bilis.</strong> Es un líquido que sale del hígado por unos conductos hacia el intestino. Sirve para digerir las grasas y para absorber las vitaminas A, D, E y K.</li>
+        <li><strong>Fabrica proteínas importantes.</strong> Por ejemplo la albúmina, que mantiene el líquido dentro de los vasos sanguíneos, y las sustancias que hacen que la sangre coagule.</li>
+        <li><strong>Guarda y reparte energía.</strong> Almacena azúcar y la libera cuando el cuerpo la necesita.</li>
+        <li><strong>Limpia la sangre.</strong> Procesa medicamentos, toxinas y los restos de los glóbulos rojos viejos (la bilirrubina, un pigmento amarillo).</li>
+        <li><strong>Guarda vitaminas y hierro</strong> y colabora con las defensas contra las infecciones.</li>
+      </ul>
+      <p class="edu-p" style="margin-top:8px;">Tiene mucha capacidad de reserva y de regeneración. Su problema aparece cuando se cicatriza (fibrosis): el tejido cicatricial es duro y deja pasar peor la sangre y la bilis.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">El bazo: filtro de la sangre y cuartel de defensas</div>
+      <ul class="edu-list">
+        <li><strong>Filtra la sangre.</strong> Retira los glóbulos rojos viejos o dañados y recicla su hierro.</li>
+        <li><strong>Ayuda a defender el cuerpo.</strong> Contiene glóbulos blancos y ayuda a eliminar bacterias de la sangre. Esto es especialmente importante en niños pequeños.</li>
+        <li><strong>Almacena plaquetas y glóbulos blancos.</strong> Cuando el bazo se agranda, retiene más de lo normal y en la sangre quedan menos.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Cómo se conecta todo en el caso de Tati</div>
+      <ul class="edu-list">
+        <li><strong>1. Atresia biliar.</strong> Los conductos que sacan la bilis del hígado estaban obstruidos. La bilis se quedaba dentro y dañaba el hígado.</li>
+        <li><strong>2. La operación de Kasai (agosto 2025).</strong> Conecta el hígado directamente con el intestino para que la bilis pueda salir. En Tati funcionó: la bilirrubina es normal. Pero el hígado ya tenía cicatrices y puede seguir endureciéndose poco a poco.</li>
+        <li><strong>3. El "atasco" de la sangre.</strong> La sangre del intestino y del bazo llega al hígado por una vena grande llamada vena porta. Si el hígado está más duro, cuesta que pase y la presión sube. Eso es la hipertensión portal.</li>
+        <li><strong>4. Consecuencias.</strong> El bazo se agranda y retiene plaquetas (por eso bajan). La sangre busca caminos alternativos y aparecen venas nuevas (circulación colateral). En fases más avanzadas puede acumularse líquido en el abdomen (ascitis) o formarse varices, venas dilatadas que pueden sangrar.</li>
+        <li><strong>5. Colangitis.</strong> Es una infección de las vías biliares. Por eso Tati toma antibiótico todos los días (Augmentine), para prevenirla.</li>
+      </ul>
+      <p class="edu-p" style="margin-top:8px;">Los medicamentos encajan con esta historia: el ursodesoxicólico ayuda a que la bilis fluya, las vitaminas A, D, E y K compensan lo que no se absorbe sin suficiente bilis, la espironolactona (un diurético) ayuda a eliminar líquido y el omeprazol protege el estómago.</p>
+      <p class="edu-p">Cicatrización no significa fallo del hígado: con función conservada, como hoy en Tati, un hígado puede trabajar bien durante años. Por eso el equipo mira juntas la analítica, la ecografía y la exploración.</p>
+    </div>
+    </div>
+
+    <div id="sub-m" style="display:none">
+    <div class="alert-box alert-info">Pulsa cada grupo para abrirlo. Las etiquetas muestran el último valor de Tati (analítica del 27/10/2026, salvo que se indique otra fecha). Los rangos de referencia son los del laboratorio del hospital y pueden variar con la edad. La interpretación de cada cifra siempre corresponde a su médico.</div>
+    <details class="card g-group" open><summary>1 · Hígado y vías biliares: ¿hay daño o atasco de bilis?</summary><div class="g-body">
+<div class="g-item"><div class="g-head"><span class="g-name">AST y ALT (transaminasas)</span><span class="badge badge-warn">AST 179 · ALT 263 ↑</span></div><div class="g-text">Enzimas que viven dentro de las células del hígado. Cuando las células se irritan o se dañan, se escapan a la sangre y suben. Indican irritación o daño del hígado, no su capacidad de trabajo.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">GGT y fosfatasa alcalina</span><span class="badge badge-warn">GGT 447 ↑ · FA 919 ↑</span></div><div class="g-text">Enzimas de las paredes de los conductos biliares. Suben cuando la bilis sale con dificultad. La GGT es la que más sigue el equipo para valorar el flujo de bilis tras el Kasai.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Bilirrubina total y directa</span><span class="badge badge-ok">0,38 ✓ normal</span></div><div class="g-text">Pigmento amarillo que resulta de destruir glóbulos rojos viejos. El hígado la procesa y la elimina con la bilis. Si algo falla, se acumula y aparece la ictericia (piel y ojos amarillos). Es el indicador más importante de que el Kasai funciona.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Ácidos biliares</span><span class="badge badge-warn">52,1 ↑</span></div><div class="g-text">Componentes de la bilis. Si la bilis no sale bien, pasan a la sangre y suben. En niños que toman ursodesoxicólico esta prueba no es fiable, por eso se interpreta con cautela.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">LDH</span><span class="badge badge-ok">265 ✓</span></div><div class="g-text">Enzima presente en muchos tejidos que sube cuando hay daño celular en general. Es un dato de apoyo.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Colinesterasa</span><span class="badge badge-neutral">7991 · cerca del límite bajo</span></div><div class="g-text">Enzima que fabrica el hígado. Si el hígado produce menos, baja. Se vigila su tendencia.</div></div>
+</div></details>
+    <details class="card g-group"><summary>2 · Cómo trabaja el hígado (su función de fábrica)</summary><div class="g-body">
+<div class="g-item"><div class="g-head"><span class="g-name">INR, tiempo y actividad de protrombina, TTPA, fibrinógeno</span><span class="badge badge-ok">INR 0,9 ✓</span></div><div class="g-text">Miden cuánto tarda la sangre en coagular. El hígado fabrica los factores de coagulación, con ayuda de la vitamina K. Si el hígado falla o falta vitamina K, la sangre tarda más. El INR es el dato más usado y 1,0 es lo habitual.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Albúmina y proteínas totales</span><span class="badge badge-ok">Albúmina 4,1 ✓</span></div><div class="g-text">Proteínas que fabrica el hígado. La albúmina mantiene el líquido dentro de los vasos; si baja mucho, se acumula líquido (hinchazón, ascitis).</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Prealbúmina y RBP</span><span class="badge badge-warn">Preálb. 10,3 · RBP 1,6 ↓</span></div><div class="g-text">Proteínas de vida corta que reflejan cómo ha trabajado el hígado y cómo se ha nutrido el niño en las últimas semanas. La RBP transporta la vitamina A.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Glucosa</span><span class="badge badge-neutral">115 · leve ↑</span></div><div class="g-text">El hígado guarda azúcar y la libera cuando hace falta. Si estuviera muy afectado podría haber bajadas de azúcar. En niños pequeños la cifra varía mucho según cuándo han comido.</div></div>
+</div></details>
+    <details class="card g-group"><summary>3 · Vitaminas (A, D, E y K)</summary><div class="g-body">
+<div class="g-item"><div class="g-head"><span class="g-name">Por qué se miden</span></div><div class="g-text">Las vitaminas A, D, E y K necesitan bilis para absorberse. Como el flujo de bilis de Tati no es del todo normal, se miden con regularidad y se dan en suplementos.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Vitamina D</span><span class="badge badge-ok">62 ✓</span></div><div class="g-text">Cuida los huesos y ayuda a absorber el calcio. Su dosis se ha bajado a 0,8 ml.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Vitamina E</span><span class="badge badge-neutral">11,81 ✓ · cociente 5,8</span></div><div class="g-text">Protege las células, sobre todo las de los nervios. Viaja con la grasa de la sangre, por eso se compara con el colesterol (cociente E/colesterol).</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Vitamina A</span><span class="badge badge-warn">0,20 ↓ · cociente 0,9 ✓</span></div><div class="g-text">Importante para la visión, la piel y las defensas. Su valor depende de su proteína transportadora (RBP): si ésta es baja, la vitamina A también sale baja. El cociente entre ambas (A/RBP) indica si hay un problema real.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Vitamina K (Konakion)</span><span class="badge badge-ok">INR 0,9 ✓</span></div><div class="g-text">Imprescindible para coagular. No se mide directamente: se controla a través del INR.</div></div>
+</div></details>
+    <details class="card g-group"><summary>4 · Hemograma: las células de la sangre</summary><div class="g-body">
+<div class="g-item"><div class="g-head"><span class="g-name">Hemoglobina, hematocrito y hematíes</span><span class="badge badge-neutral">Hb 10,3 · límite bajo</span></div><div class="g-text">Los glóbulos rojos llevan oxígeno por el cuerpo. La hemoglobina es la proteína que lo transporta. Si está baja, hay anemia.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">VCM, HCM, CHCM, RDW y % microcíticos</span><span class="badge badge-warn">VCM 74,4 ↓ · RDW 14,6</span></div><div class="g-text">Describen el tamaño y el contenido de los glóbulos rojos. Un VCM bajo significa glóbulos más pequeños, algo que puede deberse a falta de hierro, entre otras causas. Un RDW alto indica que hay glóbulos de tamaños muy distintos.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Plaquetas (y volumen plaquetar medio)</span><span class="badge badge-warn">147 ↓</span></div><div class="g-text">Células que tapan las heridas y ayudan a coagular. Bajan cuando el bazo agrandado las retiene. Con la cifra actual no hay riesgo especial de sangrado, pero la tendencia se vigila porque refleja la hipertensión portal.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Leucocitos (y neutrófilos, linfocitos, monocitos, eosinófilos)</span><span class="badge badge-ok">Leuc. 5,78 · Neutr. 2,10 ✓</span></div><div class="g-text">Son las defensas. Los neutrófilos son la primera línea contra las bacterias: si bajan (neutropenia), hay más riesgo de infección, como ocurrió en junio de 2026.</div></div>
+</div></details>
+    <details class="card g-group"><summary>5 · Infección e inflamación</summary><div class="g-body">
+<div class="g-item"><div class="g-head"><span class="g-name">PCR, procalcitonina y VSG</span><span class="badge badge-ok">VSG 10 ✓ (PCR y procalcitonina normales en jun)</span></div><div class="g-text">Suben cuando hay inflamación o infección. La procalcitonina y la PCR ayudan a distinguir una infección bacteriana de una viral. Se piden sobre todo cuando hay fiebre.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Hemocultivo</span></div><div class="g-text">Busca bacterias en la sangre. Se hace cuando hay fiebre para decidir el antibiótico.</div></div>
+</div></details>
+    <details class="card g-group"><summary>6 · Marcador tumoral y otras pruebas</summary><div class="g-body">
+<div class="g-item"><div class="g-head"><span class="g-name">AFP (alfafetoproteína)</span><span class="badge badge-neutral">10,0 ↑ leve (baja)</span></div><div class="g-text">Proteína que fabrica el hígado del feto: es muy alta al nacer y baja durante el primer año. En un hígado con enfermedad crónica puede subir por regeneración. También se usa como vigilancia, para detectar a tiempo lesiones nuevas; por eso se acompaña de la ecografía. Una cifra ligeramente alta que baja, como la de Tati y sin lesiones en la eco, se sigue sin alarma.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Creatinina y urato</span><span class="badge badge-ok">0,21 ✓</span></div><div class="g-text">Miden la función del riñón. Se vigilan porque algunos medicamentos, como la espironolactona, actúan sobre él.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Sodio y potasio</span><span class="badge badge-ok">137 / 4,3 ✓ (jun 2026)</span></div><div class="g-text">Sales que regula el riñón. Se controlan al tomar espironolactona, que puede subir el potasio.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Colesterol y triglicéridos</span><span class="badge badge-neutral">Col. 203 · leve ↑</span></div><div class="g-text">La bilis es una de las vías por las que el cuerpo elimina el colesterol; si fluye peor, el colesterol puede subir.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Calcio y fosfato</span><span class="badge badge-ok">10,3 / 5,0 ✓</span></div><div class="g-text">Indican cómo están los huesos y si la vitamina D se absorbe bien.</div></div>
+</div></details>
+    <details class="card g-group"><summary>7 · Ecografía y exploración</summary><div class="g-body">
+<div class="g-item"><div class="g-head"><span class="g-name">Ecografía abdominal con Doppler</span></div><div class="g-text">Es una imagen con ultrasonidos, sin radiación. Muestra el tamaño, el contorno y la textura del hígado (si es liso o lobulado, si hay nódulos), el tamaño del bazo, si hay quistes o líquido en el abdomen y, con el Doppler, la velocidad y la dirección de la sangre.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Vena porta (flujo hepatópeto)</span><span class="badge badge-ok">23 cm/s</span></div><div class="g-text">Es la vena que lleva la sangre al hígado. «Hepatópeto» significa que va hacia el hígado, que es lo normal. Se mide su velocidad.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Arteria hepática (índice de resistencia, IR)</span><span class="badge badge-warn">IR 0,93</span></div><div class="g-text">Es la otra arteria que alimenta el hígado. En hígados enfermos suele trabajar más para compensar, lo que se refleja en un IR más alto.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Vena umbilical</span><span class="badge badge-warn">Repermeabilizada</span></div><div class="g-text">Es una vena del cordón umbilical que se cierra poco después de nacer. Si vuelve a abrirse, indica que la presión en la porta está alta y la sangre busca otro camino.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Dilatación quística de la vía biliar</span><span class="badge badge-warn">15×29×24 mm</span></div><div class="g-text">Es un ensanchamiento de un conducto biliar. Puede favorecer las infecciones, por eso se mide en cada ecografía.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">«Traveses» en la exploración</span><span class="badge badge-neutral">Hígado 3 · bazo 1,5</span></div><div class="g-text">Es la forma de medir con la mano cuánto sobresalen el hígado o el bazo por debajo de las costillas: un través equivale a un dedo. «Hepatomegalia dura» significa un hígado grande y firme.</div></div>
+<div class="g-item"><div class="g-head"><span class="g-name">Peso, talla y desviaciones estándar (DE)</span><span class="badge badge-ok">Peso +0,5 DE</span></div><div class="g-text">La DE indica cuánto se aleja el niño de la media para su edad: 0 es el promedio y entre −2 y +2 se considera normal.</div></div>
+</div></details>
     </div>
   </div>
 
@@ -522,12 +719,14 @@
   <div id="tab-alertas" class="section">
     <div class="alert-box alert-danger"><strong>⚠ PROHIBIDO:</strong> Ibuprofeno · Paracetamol → usar siempre <strong>Metamizol</strong>.</div>
     <div class="alert-box alert-danger"><strong>🚨 URGENCIA (fiebre o sangrado digestivo):</strong> Hospital más cercano + <strong>91 727 70 00</strong> → hepatólogo de guardia.</div>
-    <div class="alert-box alert-warn"><strong>Espironolactona:</strong> hay que suspenderla 2 semanas antes de la próxima consulta de hepatología. Anotar aquí la fecha de cita cuando se confirme.</div>
-    <div class="alert-box alert-warn"><strong>Signos de colangitis:</strong> Fiebre, deposiciones acólicas (blancas o grises), ictericia repentina, decaimiento. Las deposiciones "algo más claras de vez en cuando" están anotadas por hepatología; consultar si se vuelven blanquecinas de forma mantenida.</div>
-    <div class="alert-box alert-warn"><strong>Hipertensión portal:</strong> Distensión abdominal brusca, vómitos con sangre, rectorragia.</div>
-    <div class="alert-box alert-info"><strong>AFP 16,3 ng/mL:</strong> subió desde 9,0 en julio. Sin lesiones focales en la ecografía del 14/09. Hepatología la repetirá en la próxima revisión.</div>
-    <div class="alert-box alert-info"><strong>Hemoglobina 10,7 g/dL:</strong> dentro de rango pero en el límite bajo y con tendencia descendente (13,3 en marzo). Pregunta útil para la próxima consulta.</div>
-    <div class="alert-box alert-ok"><strong>Situación estable (sep 2026):</strong> Sin colangitis desde dic 2025. GGT en mínimo histórico. BT normal. Hemograma recuperado. Neurología OK. Sin sonda. Camina sin apoyo.</div>
+    <div class="alert-box alert-warn"><strong>Hipertensión portal con signos de progresión (eco 06/11):</strong> bazo 8,9 cm, vena umbilical repermeabilizada, mínima lengüeta de líquido. Vigilar distensión abdominal, aumento rápido de peso, vómitos con sangre, heces negras o con sangre. Avisar si aparecen hematomas sin golpe o sangrado de nariz o encías.</div>
+    <div class="alert-box alert-warn"><strong>Espironolactona reintroducida:</strong> 2,5 ml cada 24 h desde el 10/11. Ya no hay que suspenderla antes de la consulta.</div>
+    <div class="alert-box alert-warn"><strong>Signos de colangitis:</strong> Fiebre, deposiciones acólicas (blancas o grises), ictericia repentina, decaimiento. El quiste/dilatación biliar ha crecido; consultar ante cualquier fiebre.</div>
+    <div class="alert-box alert-info"><strong>Hemoglobina 10,3 · VCM 74,4:</strong> sigue dentro del rango del laboratorio pero baja en cada control, con glóbulos cada vez más pequeños. Pregunta pendiente para hepatología (estudio del hierro).</div>
+    <div class="alert-box alert-info"><strong>GGT 447, ALT 263, ácidos biliares 52:</strong> han vuelto a subir tras la mejoría de verano. Bilirrubina e INR siguen normales.</div>
+    <div class="alert-box alert-info"><strong>AFP 10,0 ng/mL:</strong> bajó desde 16,3. Sin lesiones focales en ecografía.</div>
+    <div class="alert-box alert-info"><strong>Soplo sistólico I/VI:</strong> nuevo en la exploración del 10/11. Comentarlo en la próxima consulta.</div>
+    <div class="alert-box alert-ok"><strong>Función hepática conservada (nov 2026):</strong> bilirrubina 0,38, INR 0,9, albúmina 4,1. Sin ascitis clínica, sin fiebre, crecimiento ascendente, sin sonda, camina sin apoyo.</div>
 
     <div class="card">
       <div class="card-title">Contactos médicos clave</div>
@@ -536,16 +735,16 @@
       <div class="contact-row"><span class="contact-label">📞 Secretaría hepatología</span><span class="contact-val">91 727 75 43</span></div>
       <div class="contact-row"><span class="contact-label">✉ Email hepatología</span><span class="contact-val">ihepato.hulp@salud.madrid.org</span></div>
       <div class="contact-row"><span class="contact-label">📞 Eco / resultados</span><span class="contact-val">91 727 74 79 (Dr. Climent)</span></div>
-      <div class="contact-row"><span class="contact-label">👩‍⚕️ Hepatóloga</span><span class="contact-val">Dra. Fernández Tomé</span></div>
+      <div class="contact-row"><span class="contact-label">👩‍⚕️ Hepatología</span><span class="contact-val">Dra. Lledín Barbancho · Dra. Fernández Tomé</span></div>
     </div>
 
     <div class="card">
       <div class="card-title">Próximas citas y pendientes</div>
-      <div class="contact-row"><span class="contact-label">Hepatología</span><span class="contact-val"><span class="badge badge-danger">Fecha por confirmar</span></span></div>
-      <div class="contact-row"><span class="contact-label">Analítica + AFP</span><span class="contact-val"><span class="badge badge-warn">Con la próxima revisión</span></span></div>
-      <div class="contact-row"><span class="contact-label">Ecografía abdominal</span><span class="contact-val"><span class="badge badge-info">Solicitada</span></span></div>
+      <div class="contact-row"><span class="contact-label">Hepatología + analítica</span><span class="contact-val"><span class="badge badge-danger">Jueves 21 enero 2027</span></span></div>
+      <div class="contact-row"><span class="contact-label">Espironolactona</span><span class="contact-val"><span class="badge badge-warn">En curso: 2,5 ml/24 h</span></span></div>
+      <div class="contact-row"><span class="contact-label">Ecografía</span><span class="contact-val"><span class="badge badge-ok">Realizada (validada 06/11)</span></span></div>
       <div class="contact-row"><span class="contact-label">Nutrición</span><span class="contact-val"><span class="badge badge-info">Seguimiento activo</span></span></div>
-      <div class="contact-row"><span class="contact-label">Vacunas</span><span class="contact-val" style="font-size:12px;">Varicela (puede recibirla) · Gripe (recomendada)</span></div>
+      <div class="contact-row"><span class="contact-label">Vacunas</span><span class="contact-val" style="font-size:12px;">Varicela pendiente (gripe ya puesta)</span></div>
       <div class="contact-row"><span class="contact-label">Neurología</span><span class="contact-val"><span class="badge badge-ok">Alta — no precisa</span></span></div>
     </div>
   </div>
@@ -560,8 +759,14 @@ function showTab(id, btn) {
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
 }
+function showSub(id) {
+  ['q','g','m'].forEach(k => {
+    document.getElementById('sub-' + k).style.display = k === id ? '' : 'none';
+    document.getElementById('subbtn-' + k).classList.toggle('active', k === id);
+  });
+}
 function showAn(id) {
-  ['sep','jul','jun','may','abr','mar'].forEach(k => {
+  ['oct','sep','jul','jun','may','abr','mar'].forEach(k => {
     document.getElementById('an-' + k).style.display = k === id ? '' : 'none';
     document.getElementById('btn-' + k).classList.toggle('active', k === id);
   });
@@ -588,41 +793,50 @@ const purple = isDark ? '#AFA9EC' : '#534AB7', purpleF = isDark ? 'rgba(175,169,
 const blue = isDark ? '#85B7EB' : '#185FA5';
 
 // GGT
-line('ggtChart', ['Ago 25','Oct 25','Ene 26','Mar 26','Abr 26','May 26','Jul 26','Sep 26'],
-  [ds([599,1115,1901,1552,902,414,392,337], amber, amberF)]);
+line('ggtChart', ['Ago 25','Oct 25','Ene 26','Mar 26','Abr 26','May 26','Jul 26','Sep 26','Oct 26'],
+  [ds([599,1115,1901,1552,902,414,392,337,447], amber, amberF)]);
 
 // Transaminasas
-line('transChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
-  [ds([456,173,186,186,233,150], red, 'transparent', { label: 'AST', fill: false }),
-   ds([435,201,162,165,216,200], blue, 'transparent', { label: 'ALT', fill: false })], {}, true);
+line('transChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26','Oct 26'],
+  [ds([456,173,186,186,233,150,179], red, 'transparent', { label: 'AST', fill: false }),
+   ds([435,201,162,165,216,200,263], blue, 'transparent', { label: 'ALT', fill: false })], {}, true);
 
 // Bilirrubina
-line('btChart', ['Ago 25','Sep 25','Ene 26','Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
-  [ds([8.1,3.5,2.18,0.91,0.63,0.31,0.33,0.40,0.23], teal, tealF)], { min: 0, ticks: { callback: v => v.toFixed(1), color: tick, font: { size: 11 } } });
+line('btChart', ['Ago 25','Sep 25','Ene 26','Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26','Oct 26'],
+  [ds([8.1,3.5,2.18,0.91,0.63,0.31,0.33,0.40,0.23,0.38], teal, tealF)], { min: 0, ticks: { callback: v => v.toFixed(1), color: tick, font: { size: 11 } } });
 
 // AFP
-line('afpChart', ['Mar 26','Abr 26','May 26','Jul 26','Sep 26'],
-  [ds([24.7,32.6,24.1,9.0,16.3], purple, purpleF)], { min: 0 });
+line('afpChart', ['Mar 26','Abr 26','May 26','Jul 26','Sep 26','Oct 26'],
+  [ds([24.7,32.6,24.1,9.0,16.3,10.0], purple, purpleF)], { min: 0 });
 
 // Plaquetas
-line('platChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
-  [ds([209,182,155,101,198,178], red, redF, { pointRadius: [4,4,4,7,4,4], pointBackgroundColor: [red,red,red,'#ff0000',red,red] })],
+line('platChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26','Oct 26'],
+  [ds([209,182,155,101,198,178,147], red, redF, { pointRadius: [4,4,4,7,4,4,4], pointBackgroundColor: [red,red,red,'#ff0000',red,red,red] })],
   { min: 60, max: 260, ticks: { color: tick, font: { size: 10 } }, grid: { color: grid } });
 
 // Leucocitos
-line('leucChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
-  [ds([10.56,7.68,8.41,2.17,8.51,6.70], purple, purpleF, { pointRadius: [4,4,4,7,4,4], pointBackgroundColor: [purple,purple,purple,'#ff0000',purple,purple] })],
+line('leucChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26','Oct 26'],
+  [ds([10.56,7.68,8.41,2.17,8.51,6.70,5.78], purple, purpleF, { pointRadius: [4,4,4,7,4,4,4], pointBackgroundColor: [purple,purple,purple,'#ff0000',purple,purple,purple] })],
   { min: 0, max: 14, ticks: { callback: v => v.toFixed(1), color: tick, font: { size: 10 } }, grid: { color: grid } });
 
 // Hemoglobina
-line('hbChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26'],
-  [ds([13.3,12.5,13.0,11.5,11.3,10.7], teal, tealF)],
+line('hbChart', ['Mar 26','Abr 26','May 26','Jun 26','Jul 26','Sep 26','Oct 26'],
+  [ds([13.3,12.5,13.0,11.5,11.3,10.7,10.3], teal, tealF)],
   { min: 9, max: 16, ticks: { callback: v => v.toFixed(1), color: tick, font: { size: 10 } }, grid: { color: grid } });
 
 // Peso
-line('weightChart', ['Sep 25','Oct 25','Dic 25','Ene 26','Mar 26','Abr 26','May 26','Jul 26','Sep 26'],
-  [ds([4.71,5.24,6.10,7.12,8.30,8.40,8.90,9.50,10.10], purple, purpleF)],
+line('weightChart', ['Sep 25','Oct 25','Dic 25','Ene 26','Mar 26','Abr 26','May 26','Jul 26','Sep 26','Nov 26'],
+  [ds([4.71,5.24,6.10,7.12,8.30,8.40,8.90,9.50,10.10,10.70], purple, purpleF)],
   { min: 4, max: 11, ticks: { callback: v => v.toFixed(1) + ' kg', color: tick, font: { size: 11 } }, grid: { color: grid } });
+
+// Bazo
+line('spleenChart', ['Feb 26','Abr 26','Jul 26','Sep 26','Nov 26'],
+  [ds([8.7,6.0,7.5,7.7,8.9], amber, amberF)],
+  { min: 4, max: 11, ticks: { callback: v => v.toFixed(1) + ' cm', color: tick, font: { size: 11 } }, grid: { color: grid } });
+// VCM
+line('mcvChart', ['Jun 26','Jul 26','Sep 26','Oct 26'],
+  [ds([90.8,84.0,79.8,74.4], purple, purpleF)],
+  { min: 60, max: 100, ticks: { callback: v => v + ' fL', color: tick, font: { size: 11 } }, grid: { color: grid } });
 
 // Preguntas: checkboxes y fecha (guardado local)
 const LS = {
@@ -638,19 +852,17 @@ document.querySelectorAll('.q-item input').forEach(cb => {
     item.classList.toggle('done', cb.checked);
   });
 });
-const nextVisit = document.getElementById('nextVisit');
-const spiroMsg = document.getElementById('spiroMsg');
-function updateSpiro() {
-  if (!nextVisit.value) { return; }
-  const d = new Date(nextVisit.value + 'T00:00:00');
-  const stop = new Date(d.getTime());
-  stop.setDate(stop.getDate() - 14);
-  const fmt = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-  spiroMsg.innerHTML = 'Dejar la espironolactona el <strong>' + stop.toLocaleDateString('es-ES', fmt) + '</strong> (2 semanas antes de la consulta del ' + d.toLocaleDateString('es-ES', fmt) + ').';
-}
-const savedVisit = LS.get('tati_next_visit');
-if (savedVisit) { nextVisit.value = savedVisit; updateSpiro(); }
-nextVisit.addEventListener('change', () => { LS.set('tati_next_visit', nextVisit.value); updateSpiro(); });
+(function () {
+  const el = document.getElementById('visitCountdown');
+  if (!el) { return; }
+  const target = new Date('2027-01-21T00:00:00');
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const days = Math.round((target - today) / 86400000);
+  if (days > 1) { el.textContent = 'Faltan ' + days + ' días.'; }
+  else if (days === 1) { el.textContent = 'Es mañana.'; }
+  else if (days === 0) { el.textContent = 'Es hoy.'; }
+  else { el.textContent = 'Esta fecha ya ha pasado: conviene actualizar la cita.'; }
+})();
 </script>
 </body>
 </html>
